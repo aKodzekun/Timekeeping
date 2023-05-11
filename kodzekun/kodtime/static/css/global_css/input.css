@@ -1,0 +1,98 @@
+/* input */
+.input-box{
+    width: 330px;
+    box-sizing: border-box;
+}
+.input-box header{
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 45px;
+}
+.input-field{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 0 10px 0 10px;
+}
+.input{
+    height: 45px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    outline: none;
+    margin-bottom: 20px;
+    color: #40414a;
+}
+.input-box .input-field label{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    pointer-events: none;
+    transition: .5s;
+}
+.input-field .input:focus ~ label{
+    top: -10px;
+    font-size: 13px;
+}
+.input-field .input:valid ~ label{
+    top: -10px;
+    font-size: 13px;
+    color: #5d5076;
+}
+.input-field .input:focus, .input-field .input:valid{
+    border-bottom: 1px solid #743ae1;
+}
+
+/* Button */
+.submit{
+    border: none;
+    outline: none;
+    height: 45px;
+    background: #212121;
+    border-radius: 5px;
+    color: #fff;
+    transition: .4s;
+}
+.submit:hover{
+    background: rgba(37, 95, 156,0.9);
+    color: #fff;
+}
+
+/* Range */
+.input-field.range1{
+    flex-direction: row;
+}
+.input-field .input-range {
+    max-width: 400px;
+    width: 100%;
+    margin: 20px 10px;
+    appearance: none;
+    height: 15px;
+    background-color: #ededed;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 25px;
+}
+.input-range::-webkit-slider-thumb {
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-color: #4070f4;
+  box-shadow: -208px 0 0 200px #4070f4;
+}
+.range1 .slide-value {
+    font-size: 20px;
+    margin: 12px -19px;
+    font-weight: 500;
+    color: #333;
+    width: 70px;
+    text-align: center;
+}
+
+/* Select */
+.form-select {
+    margin: 10px 0px 25px 0px;
+}

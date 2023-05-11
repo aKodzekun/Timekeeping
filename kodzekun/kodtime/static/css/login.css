@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
+body {
+    background:rgb(45, 70, 101) !important;
+}
+.wrapper{
+    background: #ececec;
+    padding: 0 20px 0 20px;
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.row{
+    width: 900px;
+    height: 550px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
+}
+
+.image{
+    display: contents;
+    transform: scale(0.9);
+}
+
+img{
+    width: 100%;
+    position: relative;
+    top: 12%;
+}
+
+.right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.signin{
+    text-align: center;
+    font-size: small;
+    margin-top: 25px;
+}
+
+span a{
+    text-decoration: none;
+    font-weight: 700;
+    color: #000;
+    transition: .5s;
+}
+
+span a:hover{
+    text-decoration: underline;
+    color: #000;
+}
+
+@media only screen and (max-width: 769px){
+    .col_none{
+        display:none;
+    }
+    .row{
+        max-width: 420px;
+
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 992px){
+    img{
+        width: 100%;
+        position: relative;
+        top: 22%;
+    }
+    .row{
+        max-width: 692px;
+        width: 100%;
+    }
+}
