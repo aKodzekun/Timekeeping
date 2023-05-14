@@ -1,9 +1,192 @@
-from django.shortcuts import render
+from .models import *
+from smtplib import *
+from .fuction import *
+from django.contrib import admin
+from django.contrib import messages
+from django.contrib.auth.models import User, auth
+from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import make_password, check_password
+
+import time
 
 # Create your views here.
 def home(request):
-    return render(request,"home.html")
-def sign(request):
-    return render(request,"sign.html")
+    if(request.session['login']):
+        return render(request,"home.html")
+    else:
+        return redirect('login')
+
+def registration(request):
+    if(request.session['login']):
+        return redirect('home')
+    else:
+        return render(request,"sign.html")
+
 def login(request):
-    return render(request,"login.html")
+    if (request.session['login']):
+        return redirect('home')
+    else:
+        return render(request,"login.html")
+
+def sign(request):
+    if request.method == 'POST':
+        db_key = randomword(8)
+        # adminpass = password(db_key)
+        # iterations = 200000
+        # algorithm = 'sha512'
+        adminpass = make_password(db_key, salt=None)
+
+        name = request.POST["com_name"]
+        register = 0
+        short_name = request.POST["nick_name"]
+        phone = request.POST["phone"]
+        mail = request.POST["mail"]
+        men_cnt = request.POST["customRange"]
+        type = request.POST["type"]
+        license_date = time.time() + 1209600  # after 14days
+        license_attent_date = time.time() + 950400  # after 11days
+
+        # sendDatas = {
+        #     'title': title.encode('utf-8'),
+        #     'password': db_key,
+        #     'sign_name': mail,
+        #     'confidentiality': db_key,
+        #     'men_cnt': men_cnt,
+        #     'license': time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(license_date)),
+        # }
+
+        count = companies_i.objects.filter(mail__contains=mail).count()
+        if(count>0):
+            messages.success(request, 'Таны бүртгэл давхардаж байна!')
+            return redirect('registration')
+        else:
+            myCompany = companies_i()
+            myCompany.db_key=db_key
+            myCompany.register=register
+            myCompany.name=name
+            myCompany.short_name=short_name
+            myCompany.type=type
+            myCompany.phone=phone
+            myCompany.mail=mail
+            myCompany.men_cnt=men_cnt
+            myCompany.license_date=license_date
+            myCompany.license_attent_date=license_attent_date
+            myCompany.date=time.time()
+            myCompany.save()
+            newCompanyId = myCompany.id
+
+            myTree = tree_i()
+            myTree.mid=0
+            myTree.root_id=newCompanyId
+            myTree.type=0
+            myTree.name=name
+            myTree.short_name=short_name
+            myTree.salary=0
+            myTree.salary_type=""
+            myTree.men_cnt=men_cnt
+            myTree.date=time.time()
+            myTree.save()
+            newTreeComId = myTree.id
+
+            myTreeApp = tree_i()
+            myTreeApp.mid=newTreeComId
+            myTreeApp.root_id=newCompanyId
+            myTreeApp.type=2
+            myTreeApp.name="Систем удирдагч"
+            myTreeApp.short_name="СУ"
+            myTreeApp.salary=0
+            myTreeApp.salary_type=""
+            myTreeApp.men_cnt=1
+            myTreeApp.date=time.time()
+            myTreeApp.save()
+            newTreeAppId = myTreeApp.id
+
+            myHuman = human_i()
+            myHuman.db_key=db_key
+            myHuman.com_id=newTreeComId
+            myHuman.dep_id=0
+            myHuman.app_id=newTreeAppId
+            myHuman.last_name="Систем"
+            myHuman.first_name="Админ"
+            myHuman.gender=1
+            myHuman.phone=""
+            myHuman.email=mail
+            myHuman.work_type_id=1
+            myHuman.is_moderator=1
+            myHuman.code='000001'
+            myHuman.is_attendace=0 #irts bvrtguuleh eseh
+            myHuman.time_access_id=0 #tsagiin id
+            myHuman.salary_id=0
+            myHuman.author_id=0
+            myHuman.create_date=time.time()
+            myHuman.save()
+            newHumanId = myHuman.id
+
+            # user = User.objects.create_user(username='С.Админ', email=mail, password=adminpass, last_login=time.time(), date_joined=time.time(), human_id=newHumanId , last_name='Админ', first_name='Систем')
+            # user.save()
+
+            myLogin = login_i()
+            myLogin.human_id=newHumanId
+            myLogin.phone=phone
+            myLogin.mail=mail
+            myLogin.enc_password=adminpass
+            myLogin.date=time.time()
+            myLogin.save()
+
+            myCofirmMail = confirm_mail_i()
+            myCofirmMail.human_id=newHumanId
+            myCofirmMail.mail=mail
+            myCofirmMail.msg="Тавтай морил Админ"
+            myCofirmMail.is_active=1
+            myCofirmMail.date=time.time()
+
+            return redirect('login')
+
+def loginClick(request):
+    if request.method == 'POST':
+        email = request.POST["email"]
+        password = request.POST["password"]
+
+        # password_enc = password(password)
+        # user = auth.authenticate(mail=email,enc_password=password)
+        auth_login = login_i.objects.filter(mail__icontains=email)
+        # people = Person.objects.filter(age__gte=30)
+        # for person in count:
+        #     print(person.human_id, person.enc_password)
+        #     print(count.count())
+        # print(count[0])
+
+        if auth_login.count()==1:
+            for log in auth_login:
+                stored_hash = log.enc_password
+                human_id = log.human_id
+                check_pass = check_password(password, stored_hash)
+                if check_pass:
+                    human_row = human_i.objects.get(id=human_id)
+                    request.session['login'] = check_pass
+                    request.session['user_id'] = human_id
+                    request.session['db_key'] = human_row.db_key
+                    request.session['com_id'] = human_row.com_id
+                    request.session['dep_id'] = human_row.dep_id
+                    request.session['app_id'] = human_row.app_id
+                    request.session['gender'] = human_row.gender
+                    request.session['last_name'] = human_row.last_name
+                    request.session['first_name'] = human_row.first_name
+                    request.session['is_attendace'] = human_row.is_attendace
+                    request.session['time_access_id'] = human_row.time_access_id
+                    request.session['work_type_id'] = human_row.work_type_id
+                    request.session.save()
+                    # return render(request, "home.html")
+                    return redirect(home)
+                else:
+                    # nuuts ug buruu bna
+                    # return render(request, "home.html")
+                    return render(request, "login.html")
+        elif auth_login.count()>1:
+            #email davhardaj bna
+            return render(request, "login.html")
+        else:
+            #email buruu bna
+            return render(request, "login.html")
+    else:
+        return render(request, "login.html")
