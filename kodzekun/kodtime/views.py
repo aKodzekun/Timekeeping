@@ -11,29 +11,27 @@ import time
 
 # Create your views here.
 def home(request):
-    if(request.session['login']):
+    if(request.session.get('login')):
         return render(request,"home.html")
     else:
         return redirect('login')
 
-def registration(request):
-    if(request.session['login']):
+def sign(request):
+    if(request.session.get('login')):
         return redirect('home')
     else:
-        return render(request,"sign.html")
+        return render(request,"sign.html",{'name_val': '','short_name_val': '','phone_val': '','mail_val': '','men_cnt_val': 0,'type_val': 0})
 
 def login(request):
-    if (request.session['login']):
+    if (request.session.get('login')):
         return redirect('home')
     else:
         return render(request,"login.html")
 
-def sign(request):
+def signClick(request):
     if request.method == 'POST':
         db_key = randomword(8)
         # adminpass = password(db_key)
-        # iterations = 200000
-        # algorithm = 'sha512'
         adminpass = make_password(db_key, salt=None)
 
         name = request.POST["com_name"]
@@ -58,7 +56,13 @@ def sign(request):
         count = companies_i.objects.filter(mail__contains=mail).count()
         if(count>0):
             messages.success(request, 'Таны бүртгэл давхардаж байна!')
-            return redirect('registration')
+            name_val = name
+            short_name_val = short_name
+            phone_val = phone
+            mail_val = mail
+            men_cnt_val = men_cnt
+            type_val = type
+            return render(request,"sign.html",{'name_val': name_val,'short_name_val': short_name_val,'phone_val': phone_val,'mail_val': mail_val,'men_cnt_val': men_cnt_val,'type_val': type_val})
         else:
             myCompany = companies_i()
             myCompany.db_key=db_key
@@ -175,7 +179,7 @@ def loginClick(request):
                     request.session['is_attendace'] = human_row.is_attendace
                     request.session['time_access_id'] = human_row.time_access_id
                     request.session['work_type_id'] = human_row.work_type_id
-                    request.session.save()
+                    # request.session.save()
                     # return render(request, "home.html")
                     return redirect(home)
                 else:
@@ -190,3 +194,30 @@ def loginClick(request):
             return render(request, "login.html")
     else:
         return render(request, "login.html")
+
+def exitClick(request):
+    # print(request.session)
+    # request.session.clear()
+    # print(request.session)
+    # request.session.get('login').clear()
+    # print(request.session['login'])
+    del request.session['login']
+    del request.session['user_id']
+    del request.session['db_key']
+    del request.session['com_id']
+    del request.session['dep_id']
+    del request.session['app_id']
+    del request.session['gender']
+    del request.session['last_name']
+    del request.session['first_name']
+    del request.session['is_attendace']
+    del request.session['time_access_id']
+    del request.session['work_type_id']
+
+    return redirect(login)
+
+def logintosign(request):
+        return redirect('sign')
+
+def signtologin(request):
+        return redirect('login')
