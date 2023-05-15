@@ -216,8 +216,6 @@ def exitClick(request):
 
     return redirect(login)
 
-
-
 def logintosign(request):
         return redirect('sign')
 
