@@ -14,7 +14,7 @@
     <!-- JS -->
 <!--    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>-->
 <!--    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>-->
-    <title>Нэвтрэх</title>
+    <title>HASH TECHIE OFFICIAL</title>
 </head>
 <body>
     <div class="container main">
@@ -26,7 +26,24 @@
                 </div>
             </div>
             <div class="col-md-6 right">
-                {% block content %} {% endblock content %}
+                 <form action="{% url 'loginClick' %}" method="POST" class="input-box" novalidate>
+                    {% csrf_token %}
+                    <header>Нууц үг шинэчлэх</header>
+                    <div class="input-field">
+                        <input type="text" class="input" id="email" name="email" required autocomplete="off" readonly>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" class="input" id="password" name="password" required>
+                        <label for="password">Шинэ нууц үг</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" class="input" id="apassword" name="apassword" required>
+                        <label for="apassword">Нууц үг бататгах</label>
+                    </div>
+                    <div class="input-field">
+                        <button class="submit" type="submit">Хадгалах</button>
+                    </div>
+                 </form>
             </div>
         </div>
     </div>
