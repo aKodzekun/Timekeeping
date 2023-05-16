@@ -1,5 +1,18 @@
-{% extends 'home.html' %}
+{% extends 'login.html' %}
 
 {% block content %}
-<h1>Nuuts ug martsan</h1>
+ <form action="{% url 'forgetClick' %}" method="POST" class="input-box" novalidate>
+    {% csrf_token %}
+    <header>Нууц үг сэргээх</header>
+    <div class="input-field">
+        <input type="text" class="input" id="email" name="email" required autocomplete="off">
+        <label for="email">Имэйл</label>
+    </div>
+    <div class="input-field">
+        <button class="submit" type="submit">Имэйл шалгах</button>
+    </div>
+    <div class="signin">
+        <span>Нэвтрэх хэсэглүү очих бол. <a href="{% url 'login' %}">Нэвтрэх хэсэг</a></span>
+    </div>
+ </form>
 {% endblock content %}

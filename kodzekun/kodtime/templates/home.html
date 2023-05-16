@@ -30,21 +30,25 @@
         <div class="sidebar-content">
           <ul class="lists">
             <li class="list">
+                <a href="{% url 'dashboardClick' %}" class="nav-link">
                 <i class="bx bx-home-alt icon"></i>
                 <span class="link">Хяналтын самбар</span>
               </a>
             </li>
             <li class="list">
+                <a href="{% url 'notificationClick' %}" class="nav-link">
                 <i class="bx bx-bell icon"></i>
                 <span class="link">Мэдэгдэл</span>
               </a>
             </li>
             <li class="list">
+                <a href="{% url 'analystClick' %}" class="nav-link">
                 <i class="bx bx-pie-chart-alt-2 icon"></i>
                 <span class="link">Аналитик</span>
               </a>
             </li>
             <li class="list">
+                <a href="{% url 'memberClick' %}" class="nav-link">
                 <i class="bx bx-user icon"></i>
                 <span class="link">Ажилтан</span>
               </a>
@@ -53,6 +57,7 @@
 
           <div class="bottom-cotent">
             <li class="list">
+                <a href="{% url 'settingsClick' %}" class="nav-link">
                 <i class="bx bx-cog icon"></i>
                 <span class="link">Тохиргоо</span>
               </a>
@@ -67,6 +72,7 @@
         </div>
       </div>
     </nav>
-
+    <section class="overlay"></section>
+    {% block content %} {% endblock content %}
   </body>
 </html>

@@ -26,7 +26,8 @@ def login(request):
     if (request.session.get('login')):
         return redirect('home')
     else:
-        return render(request,"login.html")
+        # return render(request,"login.html")
+        return render(request, "loginContent/loginform.html")
 
 def signClick(request):
     if request.method == 'POST':
@@ -151,14 +152,7 @@ def loginClick(request):
         email = request.POST["email"]
         password = request.POST["password"]
 
-        # password_enc = password(password)
-        # user = auth.authenticate(mail=email,enc_password=password)
         auth_login = login_i.objects.filter(mail__icontains=email)
-        # people = Person.objects.filter(age__gte=30)
-        # for person in count:
-        #     print(person.human_id, person.enc_password)
-        #     print(count.count())
-        # print(count[0])
 
         if auth_login.count()==1:
             for log in auth_login:
@@ -180,7 +174,6 @@ def loginClick(request):
                     request.session['time_access_id'] = human_row.time_access_id
                     request.session['work_type_id'] = human_row.work_type_id
                     # request.session.save()
-                    # return render(request, "home.html")
                     return redirect(home)
                 else:
                     # nuuts ug buruu bna
@@ -188,19 +181,16 @@ def loginClick(request):
                     return render(request, "login.html")
         elif auth_login.count()>1:
             #email davhardaj bna
-            return render(request, "login.html")
+            messages.success(request, 'Таны имэйл хаяг давхардаж байна!')
+            return render(request, "loginContent/loginform.html")
         else:
             #email buruu bna
-            return render(request, "login.html")
+            messages.success(request, 'Таны имэйл хаяг бүртгэлгүй байна!')
+            return render(request, "loginContent/loginform.html")
     else:
-        return render(request, "login.html")
+        return render(request, "loginContent/loginform.html")
 
 def exitClick(request):
-    # print(request.session)
-    # request.session.clear()
-    # print(request.session)
-    # request.session.get('login').clear()
-    # print(request.session['login'])
     del request.session['login']
     del request.session['user_id']
     del request.session['db_key']
@@ -221,3 +211,45 @@ def logintosign(request):
 
 def signtologin(request):
         return redirect('login')
+
+def logintoforget(request):
+    # return redirect(dashboard)
+    return render(request, "loginContent/forgetform.html")
+
+def forgetClick(request):
+    if request.method == 'POST':
+        email = request.POST["email"]
+        is_email = human_i.objects.filter(email__icontains=email).count()
+        print(is_email)
+        if(is_email>0):
+            messages.success(request, 'Та имэйл хаягаа шалгана уу!')
+            return render(request, "loginContent/forgetform.html")
+        else:
+            messages.success(request, 'Таны имэйл хаяг бүртгэлгүй байна!')
+            return render(request, "loginContent/forgetform.html")
+
+def password_recovery(request):
+    # return redirect(dashboard)
+    return render(request, "loginContent/recovery.html")
+
+# in Home Moduls Action
+
+def dashboardClick(request):
+    # return redirect(dashboard)
+    return render(request, "pages/dashboard.html")
+
+def notificationClick(request):
+    # return redirect(dashboard)
+    return render(request, "pages/notification.html")
+
+def analystClick(request):
+    # return redirect(dashboard)
+    return render(request, "pages/analyst.html")
+
+def memberClick(request):
+    # return redirect(dashboard)
+    return render(request, "pages/member.html")
+
+def settingsClick(request):
+    # return redirect(dashboard)
+    return render(request, "pages/settings.html")
