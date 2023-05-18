@@ -1,0 +1,106 @@
+.settings .right_body{
+    width: 20%;
+    height: 100%;
+    padding: 10px;
+}
+.settings .right_body .leftbar {
+    height: 100%;
+    padding: 20px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.settings .right_body .leftbar a {
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+    text-decoration: none;
+    color: #000;
+    font-size: 1rem;
+}
+.settings .right_body .leftbar a:hover {
+    position: sticky;
+    width: 110%;
+    background-color: #fff8;
+    background: #fff;
+    box-shadow: 0 .1rem .4rem #0002;
+    border-radius: 3px;
+}
+.settings .left_body{
+    width: 80%;
+    height: 100%;
+    padding: 10px;
+}
+.settings .left_body .content {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.settings .left_body .content::-webkit-scrollbar{
+    width: 0.5rem;
+    height: 0.5rem;
+}
+.settings .left_body .content::-webkit-scrollbar-thumb{
+    border-radius: .5rem;
+    background-color: #0004;
+    visibility: hidden;
+}
+.settings .left_body .content:hover::-webkit-scrollbar-thumb{
+    visibility: visible;
+}
+.settings .left_body .content section {
+    height: 90vh;
+}
+.settings .left_body .content #structure .morecontent {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+}
+.settings .left_body .content #structure .tree_view {
+    height: 100%;
+    width: 30%;
+    padding: 10px;
+    box-shadow: 0 0.1rem 0.4rem #0002;
+}
+.settings .left_body .content #structure .tree {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.settings .left_body .content #structure .tree::-webkit-scrollbar{
+    width: 0.5rem;
+    height: 0.5rem;
+}
+.settings .left_body .content #structure .tree::-webkit-scrollbar-thumb{
+    border-radius: .5rem;
+    background-color: #0004;
+    visibility: hidden;
+}
+.settings .left_body .content #structure .tree:hover::-webkit-scrollbar-thumb{
+    visibility: visible;
+}
+.settings .left_body .content #structure .tree .list {
+    display: flex;
+    gap: 10px;
+    padding: 5px;
+}
+.settings .left_body .content #structure .tree_add {
+    height: 100%;
+    width: 70%;
+    padding: 20px;
+    display: grid;
+    place-items: center;
+}
+.settings .left_body .content #structure .tree_add .more_item td:first-child {
+    padding: 10px 10px 0px 0px;
+}
+.settings .left_body .content #structure .tree_add .more_item td:last-child {
+    padding: 10px 10px 0px 15px;
+}
