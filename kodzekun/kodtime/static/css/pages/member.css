@@ -1,0 +1,189 @@
+.member .right_body{
+    width: 20%;
+    height: 100%;
+    padding: 10px;
+}
+.member .right_body .structure {
+    height: 100%;
+    padding: 20px;
+    background: #fff;
+}
+.member .right_body .structure .com_name{
+    padding: 7px;
+    background: #F5B041;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 3px;
+}
+.member .right_body .structure .tree .list{
+    display: flex;
+    gap: 10px;
+    padding: 5px;
+}
+.member .left_body{
+    width: 80%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.member .left_body .topbar {
+    height: 10%;
+    padding: 20px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.member .left_body .content {
+    height: 90%;
+    padding: 20px;
+    background: #fff;
+}
+.member .left_body .topbar .input-group {
+    width: 35%;
+    height: 100%;
+    background-color: #fff5;
+    padding: 0 .8rem;
+    border-radius: 0.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: .2s;
+}
+.member .left_body .topbar .input-group:hover {
+    width: 45%;
+    background-color: #fff8;
+    box-shadow: 0 .1rem .4rem #0002;
+}
+.member .left_body .topbar .input-group img {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+.member .left_body .topbar .input-group input {
+    width: 100%;
+    padding: 0 .5rem 0 .3rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+.content .content_body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.content_body::-webkit-scrollbar{
+    width: 0.5rem;
+    height: 0.5rem;
+}
+.content_body::-webkit-scrollbar-thumb{
+    border-radius: .5rem;
+    background-color: #0004;
+    visibility: hidden;
+}
+.content_body:hover::-webkit-scrollbar-thumb{
+    visibility: visible;
+}
+.content .content_body table {
+    width: 100%;
+}
+.content .content_body td img {
+    width: 36px;
+    height: 36px;
+    margin-right: .5rem;
+    border-radius: 50%;
+
+    vertical-align: middle;
+}
+.content .content_body table, 
+.content .content_body th, 
+.content .content_body td {
+    border-collapse: collapse;
+    padding: 1rem;
+    text-align: left;
+}
+.content .content_body thead th {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #d5d1defe;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+.content .content_body tbody tr:nth-child(even) {
+    background-color: #0000000b;
+}
+.content .content_body tbody tr {
+    --delay: .1s;
+    transition: .5s ease-in-out var(--delay), background-color 0s;
+}
+.content .content_body tbody tr.hide {
+    opacity: 0;
+    transform: translateX(100%);
+}
+.content .content_body tbody tr:hover {
+    background-color: #fff6 !important;
+}
+.content tbody tr td,
+.content tbody tr td p,
+.content tbody tr td img {
+    transition: .2s ease-in-out;
+}
+.content tbody tr.hide td,
+.content tbody tr.hide td p {
+    padding: 0;
+    font: 0 / 0 sans-serif;
+    transition: .2s ease-in-out .5s;
+}
+.content tbody tr.hide td img {
+    width: 0;
+    height: 0;
+    transition: .2s ease-in-out .5s;
+}
+.content .content_body .status {
+    padding: .4rem 0;
+    border-radius: 2rem;
+    text-align: center;
+}
+.content .content_body .status.delivered {
+    background-color: #86e49d;
+    color: #006b21;
+}
+.content .content_body .status.cancelled {
+    background-color: #d893a3;
+    color: #b30021;
+}
+.content .content_body .status.pending {
+    background-color: #ebc474;
+}
+.content .content_body .status.shipped {
+    background-color: #6fcaea;
+}
+@media (max-width: 1000px) {
+    .content .content_body td:not(:first-of-type) {
+        min-width: 12.1rem;
+    }
+}
+.content .content_body thead th span.icon-arrow {
+    display: inline-block;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    border: 1.4px solid transparent;
+    
+    text-align: center;
+    font-size: 1rem;
+    
+    margin-left: .5rem;
+    transition: .2s ease-in-out;
+}
+.content .content_body thead th.active,tbody td.active {
+    color: #6c00bd;
+}
