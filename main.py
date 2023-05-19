@@ -18,3 +18,11 @@ if __name__ == '__main__':
 #akodzekun@gmail.com
 #kodzekun
 #95615036Ko
+
+#Work type id
+    # 1 idevhtei
+    # 2 amralttai
+    # 3 cholootoi
+    # 4 ajlaas garsan
+    # 5 tetgevert garsan
+    # 6 todorhoi hugatsaagv chooltei
