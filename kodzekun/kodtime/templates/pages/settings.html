@@ -14,100 +14,148 @@
         <div class="content">
             <section id="structure"><div class="morecontent">
                 <div class="tree_view">
-                    <div class="tree">
-                        <div class="list"><div>*</div><div>list1</div></div>
-                        <div class="list"><div>*</div><div>list2</div></div>
-                        <div class="list"><div>*</div><div>list3</div></div>
-                        <div class="list"><div>*</div><div>list4</div></div>
-                        <div class="list"><div>*</div><div>list5</div></div>
-                        <div class="list"><div>*</div><div>list6</div></div>
-                        <div class="list"><div>*</div><div>list7</div></div>
-                        <div class="list"><div>*</div><div>list8</div></div>
-                        <div class="list"><div>*</div><div>list9</div></div>
-                        <div class="list"><div>*</div><div>list10</div></div>
-                        <div class="list"><div>*</div><div>list11</div></div>
-                        <div class="list"><div>*</div><div>list12</div></div>
-                        <div class="list"><div>*</div><div>list13</div></div>
-                        <div class="list"><div>*</div><div>list1</div></div>
-                        <div class="list"><div>*</div><div>list2</div></div>
-                        <div class="list"><div>*</div><div>list3</div></div>
-                        <div class="list"><div>*</div><div>list4</div></div>
-                        <div class="list"><div>*</div><div>list5</div></div>
-                        <div class="list"><div>*</div><div>list6</div></div>
-                        <div class="list"><div>*</div><div>list7</div></div>
-                        <div class="list"><div>*</div><div>list8</div></div>
-                        <div class="list"><div>*</div><div>list9</div></div>
-                        <div class="list"><div>*</div><div>list10</div></div>
-                        <div class="list"><div>*</div><div>list11</div></div>
-                        <div class="list"><div>*</div><div>list12</div></div>
-                        <div class="list"><div>*</div><div>list13</div></div>
-                        <div class="list"><div>*</div><div>list1</div></div>
-                        <div class="list"><div>*</div><div>list2</div></div>
-                        <div class="list"><div>*</div><div>list3</div></div>
-                        <div class="list"><div>*</div><div>list4</div></div>
-                        <div class="list"><div>*</div><div>list5</div></div>
-                        <div class="list"><div>*</div><div>list6</div></div>
-                        <div class="list"><div>*</div><div>list7</div></div>
-                        <div class="list"><div>*</div><div>list8</div></div>
-                        <div class="list"><div>*</div><div>list9</div></div>
-                        <div class="list"><div>*</div><div>list10</div></div>
-                        <div class="list"><div>*</div><div>list11</div></div>
-                        <div class="list"><div>*</div><div>list12</div></div>
-                        <div class="list"><div>*</div><div>list13</div></div>
-                        <div class="list"><div>*</div><div>list1</div></div>
-                        <div class="list"><div>*</div><div>list2</div></div>
-                        <div class="list"><div>*</div><div>list3</div></div>
-                        <div class="list"><div>*</div><div>list4</div></div>
-                        <div class="list"><div>*</div><div>list5</div></div>
-                        <div class="list"><div>*</div><div>list6</div></div>
-                        <div class="list"><div>*</div><div>list7</div></div>
-                        <div class="list"><div>*</div><div>list8</div></div>
-                        <div class="list"><div>*</div><div>list9</div></div>
-                        <div class="list"><div>*</div><div>list10</div></div>
-                        <div class="list"><div>*</div><div>list11</div></div>
-                        <div class="list"><div>*</div><div>list12</div></div>
-                        <div class="list"><div>*</div><div>list13</div></div>
+                    <div class="com_name">
+                        {% for tree in tree_com %}
+                            <span id="{{tree.id}}">{{tree.name}}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="tree" tree="{{tree_all}}">
                     </div>
                 </div>
                 <div class="tree_add">
-                    <div class="this_more">
-                        <table>
-                            <tr class="more_item">
-                                <td>Нэр</td>
-                                <td>QQQ</td>
-                            </tr>
-                            <tr class="more_item">
-                                <td>Нийт орон тоо</td>
-                                <td>WWW</td>
-                            </tr>
-                            <tr class="more_item">
-                                <td>Сул орон тоо</td>
-                                <td>EEE</td>
-                            </tr>
-                            <tr class="more_item">
-                                <td>Идэвхтэй ажилчдын тоо</td>
-                                <td>RRR</td>
-                            </tr>
-                            <tr class="more_item">
-                                <td>Идэвхгүй ажилчдын тоо</td>
-                                <td>TTT</td>
-                            </tr>
-                            <tr class="more_item">
-                                <td>Хариуцагч</td>
-                                <td>YYY</td>
-                            </tr>
-                        </table>
-                    </div>
+                    <div class="this_more"></div>
                 </div>
             </div></section>
             <section id="timesettings"><div class="morecontent">
-                2
+                <div class="time_view">
+                    <div class="time_title">Шугаман цагийн хуваарь</div>
+                    <div class="time_list">
+                        <div class="list"><div>*</div><div>list1</div></div>
+                        <div class="list"><div>*</div><div>list2</div></div>
+                        <div class="list"><div>*</div><div>list3</div></div>
+                        <div class="list"><div>*</div><div>list4</div></div>
+                        <div class="list"><div>*</div><div>list5</div></div>
+                        <div class="list"><div>*</div><div>list6</div></div>
+                        <div class="list"><div>*</div><div>list7</div></div>
+                        <div class="list"><div>*</div><div>list8</div></div>
+                        <div class="list"><div>*</div><div>list9</div></div>
+                        <div class="list"><div>*</div><div>list10</div></div>
+                        <div class="list"><div>*</div><div>list11</div></div>
+                        <div class="list"><div>*</div><div>list12</div></div>
+                        <div class="list"><div>*</div><div>list13</div></div>
+                        <div class="list"><div>*</div><div>list1</div></div>
+                        <div class="list"><div>*</div><div>list2</div></div>
+                        <div class="list"><div>*</div><div>list3</div></div>
+                        <div class="list"><div>*</div><div>list4</div></div>
+                        <div class="list"><div>*</div><div>list5</div></div>
+                        <div class="list"><div>*</div><div>list6</div></div>
+                        <div class="list"><div>*</div><div>list7</div></div>
+                        <div class="list"><div>*</div><div>list8</div></div>
+                        <div class="list"><div>*</div><div>list9</div></div>
+                        <div class="list"><div>*</div><div>list10</div></div>
+                        <div class="list"><div>*</div><div>list11</div></div>
+                        <div class="list"><div>*</div><div>list12</div></div>
+                        <div class="list"><div>*</div><div>list13</div></div>
+                        <div class="list"><div>*</div><div>list1</div></div>
+                        <div class="list"><div>*</div><div>list2</div></div>
+                        <div class="list"><div>*</div><div>list3</div></div>
+                        <div class="list"><div>*</div><div>list4</div></div>
+                        <div class="list"><div>*</div><div>list5</div></div>
+                        <div class="list"><div>*</div><div>list6</div></div>
+                        <div class="list"><div>*</div><div>list7</div></div>
+                        <div class="list"><div>*</div><div>list8</div></div>
+                        <div class="list"><div>*</div><div>list9</div></div>
+                        <div class="list"><div>*</div><div>list10</div></div>
+                        <div class="list"><div>*</div><div>list11</div></div>
+                        <div class="list"><div>*</div><div>list12</div></div>
+                        <div class="list"><div>*</div><div>list13</div></div>
+                        <div class="list"><div>*</div><div>list1</div></div>
+                        <div class="list"><div>*</div><div>list2</div></div>
+                        <div class="list"><div>*</div><div>list3</div></div>
+                        <div class="list"><div>*</div><div>list4</div></div>
+                        <div class="list"><div>*</div><div>list5</div></div>
+                        <div class="list"><div>*</div><div>list6</div></div>
+                        <div class="list"><div>*</div><div>list7</div></div>
+                        <div class="list"><div>*</div><div>list8</div></div>
+                        <div class="list"><div>*</div><div>list9</div></div>
+                        <div class="list"><div>*</div><div>list10</div></div>
+                        <div class="list"><div>*</div><div>list11</div></div>
+                        <div class="list"><div>*</div><div>list12</div></div>
+                        <div class="list"><div>*</div><div>list13</div></div>
+                    </div>
+                </div>
+                <div class="time_add">
+                    2
+                </div>
             </div></section>
             <section id="ipsettings"><div class="morecontent">
-                3
+                <div class="Ip_view">
+                    <div class="Ip_title">Ip хаяг</div>
+                    <div class="Ip_list">
+                        <div class="list"><div>*</div><div>list1</div></div>
+                        <div class="list"><div>*</div><div>list2</div></div>
+                        <div class="list"><div>*</div><div>list3</div></div>
+                        <div class="list"><div>*</div><div>list4</div></div>
+                        <div class="list"><div>*</div><div>list5</div></div>
+                        <div class="list"><div>*</div><div>list6</div></div>
+                        <div class="list"><div>*</div><div>list7</div></div>
+                        <div class="list"><div>*</div><div>list8</div></div>
+                        <div class="list"><div>*</div><div>list9</div></div>
+                        <div class="list"><div>*</div><div>list10</div></div>
+                        <div class="list"><div>*</div><div>list11</div></div>
+                        <div class="list"><div>*</div><div>list12</div></div>
+                        <div class="list"><div>*</div><div>list13</div></div>
+                        <div class="list"><div>*</div><div>list1</div></div>
+                        <div class="list"><div>*</div><div>list2</div></div>
+                        <div class="list"><div>*</div><div>list3</div></div>
+                        <div class="list"><div>*</div><div>list4</div></div>
+                        <div class="list"><div>*</div><div>list5</div></div>
+                        <div class="list"><div>*</div><div>list6</div></div>
+                        <div class="list"><div>*</div><div>list7</div></div>
+                        <div class="list"><div>*</div><div>list8</div></div>
+                        <div class="list"><div>*</div><div>list9</div></div>
+                        <div class="list"><div>*</div><div>list10</div></div>
+                        <div class="list"><div>*</div><div>list11</div></div>
+                        <div class="list"><div>*</div><div>list12</div></div>
+                        <div class="list"><div>*</div><div>list13</div></div>
+                        <div class="list"><div>*</div><div>list1</div></div>
+                        <div class="list"><div>*</div><div>list2</div></div>
+                        <div class="list"><div>*</div><div>list3</div></div>
+                        <div class="list"><div>*</div><div>list4</div></div>
+                        <div class="list"><div>*</div><div>list5</div></div>
+                        <div class="list"><div>*</div><div>list6</div></div>
+                        <div class="list"><div>*</div><div>list7</div></div>
+                        <div class="list"><div>*</div><div>list8</div></div>
+                        <div class="list"><div>*</div><div>list9</div></div>
+                        <div class="list"><div>*</div><div>list10</div></div>
+                        <div class="list"><div>*</div><div>list11</div></div>
+                        <div class="list"><div>*</div><div>list12</div></div>
+                        <div class="list"><div>*</div><div>list13</div></div>
+                        <div class="list"><div>*</div><div>list1</div></div>
+                        <div class="list"><div>*</div><div>list2</div></div>
+                        <div class="list"><div>*</div><div>list3</div></div>
+                        <div class="list"><div>*</div><div>list4</div></div>
+                        <div class="list"><div>*</div><div>list5</div></div>
+                        <div class="list"><div>*</div><div>list6</div></div>
+                        <div class="list"><div>*</div><div>list7</div></div>
+                        <div class="list"><div>*</div><div>list8</div></div>
+                        <div class="list"><div>*</div><div>list9</div></div>
+                        <div class="list"><div>*</div><div>list10</div></div>
+                        <div class="list"><div>*</div><div>list11</div></div>
+                        <div class="list"><div>*</div><div>list12</div></div>
+                        <div class="list"><div>*</div><div>list13</div></div>
+                    </div>
+                </div>
+                <div class="Ip_add">
+                    3
+                </div>
             </div></section>
             <section id="others"><div class="morecontent">
-                4
+                
+                <div class="ring">
+                    <div>Ачаалж байна ...</div>
+                </div>
+
             </div></section>
         </div>
     </div>

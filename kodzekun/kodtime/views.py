@@ -1,6 +1,7 @@
 from .models import *
 from smtplib import *
 from .fuction import *
+from .tree import *
 from django.contrib import admin
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
@@ -12,7 +13,8 @@ import time
 # Create your views here.
 def home(request):
     if(request.session.get('login')):
-        return render(request,"home.html")
+        # return render(request,"home.html")
+        return redirect('dashboardClick')
     else:
         return redirect('login')
 
@@ -178,6 +180,7 @@ def loginClick(request):
                 else:
                     # nuuts ug buruu bna
                     # return render(request, "home.html")
+                    messages.success(request, 'Таны нууц үг буруу байна!')
                     return render(request, "login.html")
         elif auth_login.count()>1:
             #email davhardaj bna
@@ -189,22 +192,6 @@ def loginClick(request):
             return render(request, "loginContent/loginform.html")
     else:
         return render(request, "loginContent/loginform.html")
-
-def exitClick(request):
-    del request.session['login']
-    del request.session['user_id']
-    del request.session['db_key']
-    del request.session['com_id']
-    del request.session['dep_id']
-    del request.session['app_id']
-    del request.session['gender']
-    del request.session['last_name']
-    del request.session['first_name']
-    del request.session['is_attendace']
-    del request.session['time_access_id']
-    del request.session['work_type_id']
-
-    return redirect(login)
 
 def logintosign(request):
         return redirect('sign')
@@ -232,24 +219,76 @@ def password_recovery(request):
     # return redirect(dashboard)
     return render(request, "loginContent/recovery.html")
 
+
+
 # in Home Moduls Action
 
 def dashboardClick(request):
     # return redirect(dashboard)
-    return render(request, "pages/dashboard.html")
+    if (request.session.get('login') == True):
+        return render(request, "pages/dashboard.html")
+    else:
+        return redirect('login')
+
 
 def notificationClick(request):
     # return redirect(dashboard)
-    return render(request, "pages/notification.html")
+    if (request.session.get('login') == True):
+        return render(request, "pages/notification.html")
+    else:
+        return redirect('login')
 
 def analystClick(request):
     # return redirect(dashboard)
-    return render(request, "pages/analyst.html")
+    if (request.session.get('login') == True):
+        return render(request, "pages/analyst.html")
+    else:
+        return redirect('login')
 
 def memberClick(request):
     # return redirect(dashboard)
-    return render(request, "pages/member.html")
+    print(request.session.get('login'))
+    if (request.session.get('login')==True):
+        return render(request, "pages/member.html")
+    else:
+        return redirect('login')
 
 def settingsClick(request):
     # return redirect(dashboard)
-    return render(request, "pages/settings.html")
+    if (request.session.get('login')==True):
+        # global tree_array
+        tree_com = tree_i.objects.filter(id__icontains=request.session['com_id'])
+        for tree in tree_com:
+            tree_all = tree_i.objects.filter(root_id__icontains=tree.root_id)
+            # tree_array=[]
+            tree_front=[]
+            for tree_some in tree_all:
+                # tree_res = Tree(str(tree_some.id),str(tree_some.mid),str(tree_some.root_id),tree_some.name,str(tree_some.short_name),str(tree_some.type),str(tree_some.men_cnt),str(tree_some.date))
+                # tree_array.append(tree_res)
+                tree_front.append(f'''{str(tree_some.id)},{str(tree_some.mid)},{str(tree_some.root_id)},{tree_some.name},{str(tree_some.short_name)},{str(tree_some.type)},{str(tree_some.men_cnt)},{str(tree_some.date)}''')
+            # for qqqq in tree_array:
+            #     print(qqqq.getid(),qqqq.getname())
+                # tree_front.append(f'''{qqqq.getid()},{qqqq.getmid()},{qqqq.getroot_id()},{qqqq.getname()},{qqqq.gettype1()},{qqqq.getmen_cnt()},{qqqq.getdate()}''')
+
+            # print(f'''{str(tree_some.id)},{str(tree_some.mid)},{str(tree_some.root_id)},{tree_some.name},{str(tree_some.short_name)},{str(tree_some.type)},{str(tree_some.men_cnt)},{str(tree_some.date)}''')
+            return render(request, "pages/settings.html",{'tree_com': tree_com,'tree_all':tree_front})
+    else:
+        return redirect('login')
+
+def exitClick(request):
+    # print(request.session.get('login'))
+    del request.session['login']
+    del request.session['user_id']
+    del request.session['db_key']
+    del request.session['com_id']
+    del request.session['dep_id']
+    del request.session['app_id']
+    del request.session['gender']
+    del request.session['last_name']
+    del request.session['first_name']
+    del request.session['is_attendace']
+    del request.session['time_access_id']
+    del request.session['work_type_id']
+
+    return redirect(login)
+
