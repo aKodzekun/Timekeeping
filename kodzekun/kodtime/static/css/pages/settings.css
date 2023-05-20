@@ -138,7 +138,7 @@
     place-items: center;
     position: sticky;
 }
-.settings .left_body .content #structure .tree_add #popup-tree{
+.settings .left_body .content #structure .tree_add .popup-btn{
     border: none;
     outline: none;
     height: 50px;

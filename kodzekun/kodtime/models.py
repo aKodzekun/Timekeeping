@@ -57,3 +57,68 @@ class confirm_mail_i(models.Model):
     msg=models.CharField(max_length=25,default="")
     is_active=models.IntegerField(max_length=11,default=0)
     date=models.IntegerField(max_length=11,default=0)
+
+
+
+
+class direct_i(models.Model):
+    com_id=models.IntegerField(max_length=11,default=0)
+    direct_group_id=models.IntegerField(max_length=11,default=0)
+    days=models.IntegerField(max_length=2,default=0)
+    is_holiday=models.IntegerField(max_length=11,default=0)
+    is_flexible=models.IntegerField(max_length=11,default=0)
+    start_date=models.IntegerField(max_length=11,default=0)
+    between_start_date=models.IntegerField(max_length=11,default=0)
+    end_date=models.IntegerField(max_length=11,default=0)
+    between_end_date=models.IntegerField(max_length=11,default=0)
+    is_lunch=models.IntegerField(max_length=11,default=0)
+    lunch_start_date=models.IntegerField(max_length=11,default=0)
+    lunch_end_date=models.IntegerField(max_length=11,default=0)
+    missed_work_money=models.IntegerField(max_length=11,default=0)
+    create_date=models.IntegerField(max_length=11,default=0)
+
+class direct_user_i(models.Model):
+    direct_group_id=models.IntegerField(max_length=11,default=0)
+    human_id=models.IntegerField(max_length=11,default=0)
+    create_date=models.IntegerField(max_length=11,default=0)
+
+class direct_group(models.Model):
+    name=models.CharField(max_length=25,default="")
+    description=models.CharField(max_length=25,default="")
+    is_active=models.IntegerField(max_length=11,default=0)
+    author_id=models.IntegerField(max_length=11,default=0)
+    date=models.IntegerField(max_length=11,default=0)
+    _cron_date=models.IntegerField(max_length=11,default=0)
+
+class direct_schedule_i(models.Model):
+    human_id=models.IntegerField(max_length=11,default=0)
+    direct_group_id=models.IntegerField(max_length=11,default=0)
+    is_type=models.IntegerField(max_length=11,default=0)
+    is_lunch=models.IntegerField(max_length=11,default=0)
+    time_1=models.IntegerField(max_length=11,default=0)
+    time_2=models.IntegerField(max_length=11,default=0)
+    time_3=models.IntegerField(max_length=11,default=0)
+    time_4=models.IntegerField(max_length=11,default=0)
+    description=models.CharField(max_length=25,default="")
+    create_date=models.IntegerField(max_length=11,default=0)
+
+class request_i(models.Model):
+    human_id=models.IntegerField(max_length=11,default=0)
+    mail=models.CharField(max_length=25,default="")
+    msg=models.CharField(max_length=25,default="")
+    is_active=models.IntegerField(max_length=11,default=0)
+    date=models.IntegerField(max_length=11,default=0)
+
+class access_user_i(models.Model):
+    human_id = models.IntegerField(max_length=11, default=0)
+    mail = models.CharField(max_length=25, default="")
+    msg = models.CharField(max_length=25, default="")
+    is_active = models.IntegerField(max_length=11, default=0)
+    date = models.IntegerField(max_length=11, default=0)
+
+class shift_access_user_i(models.Model):
+    human_id = models.IntegerField(max_length=11, default=0)
+    mail = models.CharField(max_length=25, default="")
+    msg = models.CharField(max_length=25, default="")
+    is_active = models.IntegerField(max_length=11, default=0)
+    date = models.IntegerField(max_length=11, default=0)
