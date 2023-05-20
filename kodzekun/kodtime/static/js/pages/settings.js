@@ -3,7 +3,9 @@ $(function() {
 
     var arrowright = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>',
         arrowcorner = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-right"><polyline points="15 10 20 15 15 20"></polyline><path d="M4 4v7a4 4 0 0 0 4 4h12"></path></svg>',
-        addbttn = '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle" style=" margin-left: 10px; "><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>';
+        addbttn = '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle" style=" margin-left: 10px; "><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>',
+        editbttn='<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
+        deletebttn='<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>';
 
     var csrftoken = getCookie('csrftoken');
 
@@ -53,7 +55,9 @@ $(function() {
         tree_arr=tree_all.slice(2).slice(0, -2).split("', '");
 
     $('.this_more').on('click', '#popup-tree',function(){
-        var itemId=$(this).attr('item');
+        var itemId=$(this).attr('item'),
+            tsk=$(this).attr('tsk');
+            console.log(tsk);
         if (!$('div:last-child',leftbox).hasClass('popup-container')) {
             $.ajax({
                 url: '/treepopup/',
@@ -61,9 +65,13 @@ $(function() {
                 headers: {
                     'X-CSRFToken': csrftoken
                 },
-                data: {'mid_id':itemId},
+                data: {
+                    'mid_id':itemId,
+                    'tsk':tsk
+                },
                 success: function(response) {
                     $('.settings .left_body #structure .morecontent').after(response);
+                    new treepopup();
                 },
                 error: function(xhr, status, error) {
                     console.log('Error:', error);
@@ -71,6 +79,35 @@ $(function() {
             }); 
         }
     });
+
+    $('.this_more').on('click', '#del_tree',function(){
+        var itemId=$(this).attr('item'),
+            tsk=$(this).attr('tsk');
+            console.log(tsk);
+            $.ajax({
+                url: "/tree_back/",
+                type: "POST",
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                data: {
+                    'id':itemId,
+                    'tsk':tsk
+                },
+                success: function(response) {
+                    console.log(response);
+                    console.log(JSON.stringify(response));
+                    console.log("deeeeeeeeeeeeeeeeeee");
+                    location.reload();
+                    // $('.overlay').html(response);
+                    // new treepopup();
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error:', error);
+                }
+            });
+    });
+    
     $('#structure').on('click', '#close-popup',function(){
         $('#popup-container').remove();
     });
@@ -143,20 +180,6 @@ $(function() {
         return ret;
     }
 
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
 
     function tree_about_draw(items,senddata){
         var date = new Date(items[2] * 1000);
@@ -187,9 +210,27 @@ $(function() {
                     '<td>'+humanReadableDate+'</td>'+
                 '</tr>'+
             '</table>'+
-            '<div id="popup-tree" title="'+items[0].replace(' ','&nbsp;')+"&nbsp;дотор&nbsp;бүтэц&nbsp;нэмэх"+'" item="'+senddata['tree_id']+'"><span>'+addbttn+'</span><span>'+"Бүтэц&nbsp;нэмэх"+'</span></div>'
+            '<div class="divbttn">'+
+            (items[3]!='2'?'<div class="popup-btn" id="popup-tree" title="'+items[0].replace(' ','&nbsp;')+"&nbsp;дотор&nbsp;бүтэц&nbsp;нэмэх"+'" item="'+senddata['tree_id']+'" tsk="save"><span>'+addbttn+'</span><span>'+"Бүтэц&nbsp;нэмэх"+'</span></div>':'')+
+            '<div class="popup-btn" id="popup-tree" title="'+items[0].replace(' ','&nbsp;')+"&nbsp;бүтэц&nbsp;засах"+'" item="'+senddata['tree_id']+'" tsk="edit"><span>'+editbttn+'</span><span>'+"Бүтэц&nbsp;засах"+'</span></div>'+
+            (items[3]!='0'?'<div class="popup-btn" id="del_tree" title="'+items[0].replace(' ','&nbsp;')+"&nbsp;бүтэц&nbsp;устгах"+'" item="'+senddata['tree_id']+'" tsk="del"><span>'+deletebttn+'</span><span>'+"Бүтэц&nbsp;устгах"+'</span></div>':'')+
+            '</div>'
         );
         // $('.tree_add #popup-tree span:last-child',leftbox).html(items[0].replace(' ', '&nbsp;')+"&nbsp;дотор&nbsp;бүтэц&nbsp;нэмэх");
     }
 
 })
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

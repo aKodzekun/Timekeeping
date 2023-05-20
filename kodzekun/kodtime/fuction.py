@@ -2,6 +2,8 @@ import time
 import bcrypt
 import smtplib
 import random, string
+
+from django.db import connection
 from jinja2 import Template
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -124,3 +126,4 @@ def htmlDraw(sendDatas):
     template = Template(template_string)
 
     return template.render(sendDatas)
+

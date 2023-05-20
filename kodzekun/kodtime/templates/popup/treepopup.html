@@ -3,13 +3,9 @@
         <h1 style=" font-size: 1.9rem; ">Бүтэц үүсгэх</h1>
         <p>Та тухайн сонгогдсон бүтэц дотор самбар хэлтэс, албан тушаал гэсэн бүтэц үүсгэх боломжтой.</p>
         
-        {% for aaa in data %}
-            <h2>{{aaa}}</h2>
-        {% endfor %}
-        <form action="" method="POST" class="input-box" novalidate="">
+        <form action="" method="POST" class="input-box" novalidate="" datas="{{data}}">
             <div class="input-field">
-                <input type="text" class="input" id="in" name="in" required>
-                <label for="in">Дотор</label>
+                <input type="text" class="input" id="in" name="in" disabled required>
             </div>
             <div class="input-field">
                 <input type="text" class="input" id="name" name="name" required>
@@ -19,11 +15,12 @@
                 <input type="text" class="input" id="short_name" name="short_name" required>
                 <label for="short_name">Товч нэр</label>
             </div>
-            <select class="form-select" name="type" aria-label="Default select example">
+            <select class="form-select" name="type" id="type" aria-label="Default select example">
                   <option value="2">Анбан тушаал</option>
                   <option value="1">Самбар хэлтэс</option>
             </select>
             <div class="input-field">
+                
                 <input type="number" class="input" id="cnt" name="cnt" required>
                 <label for="cnt">Орон тоо</label>
             </div>
