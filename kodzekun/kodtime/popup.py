@@ -46,3 +46,28 @@ def treepopup(request):
                         senddata.append((tree.id,tree.mid,tree.root_id,tree.name,tree.short_name,tree.men_cnt,tree.type,remained_cnt,'edit',myrow.name,myrow.short_name,myrow.type,myrow.men_cnt, myrow.id))
                         # senddata.append((mid_res,remained_cnt))
                         return render(request, "popup/treepopup.html", {'data':senddata})
+    else:
+        return redirect('dashboardClick')
+
+def timepopup(request):
+    if request.method == 'POST':
+        tsk = request.POST.get('tsk')
+        if tsk == 'edit':
+            time_id = request.POST.get('time_id')
+            timegroup = direct_group.objects.filter(id__icontains=time_id)
+            time_i = direct_i.objects.filter(direct_group_id__icontains=time_id)
+            return render(request, "popup/timepopup.html", {'datas': {'tsk': 'edit','timegroup':timegroup,'time_i':time_i}})
+        else:
+            return render(request, "popup/timepopup.html", {'datas': {'tsk': 'add'}})
+    else:
+        return redirect('dashboardClick')
+
+def ippopup(request):
+    if request.method == 'POST':
+        tsk = request.POST.get('tsk')
+        if tsk=='add':
+            return render(request, "popup/ippopup.html", {'datas': {'tsk': 'add'}})
+
+    else:
+        return redirect('dashboardClick')
+

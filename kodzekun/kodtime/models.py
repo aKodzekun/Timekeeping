@@ -86,6 +86,7 @@ class direct_group(models.Model):
     name=models.CharField(max_length=25,default="")
     description=models.CharField(max_length=25,default="")
     is_active=models.IntegerField(max_length=11,default=0)
+    com_id=models.IntegerField(max_length=11,default=0)
     author_id=models.IntegerField(max_length=11,default=0)
     date=models.IntegerField(max_length=11,default=0)
     _cron_date=models.IntegerField(max_length=11,default=0)
@@ -104,21 +105,24 @@ class direct_schedule_i(models.Model):
 
 class request_i(models.Model):
     human_id=models.IntegerField(max_length=11,default=0)
-    mail=models.CharField(max_length=25,default="")
-    msg=models.CharField(max_length=25,default="")
-    is_active=models.IntegerField(max_length=11,default=0)
+    type_id=models.IntegerField(max_length=11,default=0)
+    com_id=models.IntegerField(max_length=11,default=0)
+    dep_id=models.IntegerField(max_length=11,default=0)
+    app_id=models.IntegerField(max_length=11,default=0)
+    shift_user_id=models.IntegerField(max_length=11,default=0)
+    shift_user_name=models.CharField(max_length=25,default="")
+    shift_date=models.IntegerField(max_length=11,default=0)
+    confirm_date=models.IntegerField(max_length=11,default=0)
+    s_date=models.IntegerField(max_length=11,default=0)
+    e_date=models.IntegerField(max_length=11,default=0)
+
+class request_access_users(models.Model):
+    human_id = models.IntegerField(max_length=11, default=0)
+    author_id = models.IntegerField(max_length=11, default=0)
     date=models.IntegerField(max_length=11,default=0)
 
-class access_user_i(models.Model):
-    human_id = models.IntegerField(max_length=11, default=0)
-    mail = models.CharField(max_length=25, default="")
-    msg = models.CharField(max_length=25, default="")
-    is_active = models.IntegerField(max_length=11, default=0)
-    date = models.IntegerField(max_length=11, default=0)
-
-class shift_access_user_i(models.Model):
-    human_id = models.IntegerField(max_length=11, default=0)
-    mail = models.CharField(max_length=25, default="")
-    msg = models.CharField(max_length=25, default="")
-    is_active = models.IntegerField(max_length=11, default=0)
-    date = models.IntegerField(max_length=11, default=0)
+class ip_i(models.Model):
+    ip = models.CharField(max_length=25,default="")
+    author_id=models.IntegerField(max_length=11,default=0)
+    desc=models.CharField(max_length=25,default="")
+    date=models.IntegerField(max_length=11,default=0)

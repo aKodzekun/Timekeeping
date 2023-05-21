@@ -47,15 +47,15 @@ def signClick(request):
         license_date = time.time() + 1209600  # after 14days
         license_attent_date = time.time() + 950400  # after 11days
 
-        # sendDatas = {
-        #     'title': title.encode('utf-8'),
-        #     'password': db_key,
-        #     'sign_name': mail,
-        #     'confidentiality': db_key,
-        #     'men_cnt': men_cnt,
-        #     'license': time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(license_date)),
-        # }
-
+        title="Сайн байна уу"
+        sendDatas = {
+            'title': title.encode('utf-8'),
+            'password': db_key,
+            'sign_name': mail,
+            'confidentiality': db_key,
+            'men_cnt': men_cnt,
+            'license': time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.localtime(license_date)),
+        }
         count = companies_i.objects.filter(mail__contains=mail).count()
         if(count>0):
             messages.success(request, 'Таны бүртгэл давхардаж байна!')
@@ -147,6 +147,8 @@ def signClick(request):
             myCofirmMail.is_active=1
             myCofirmMail.date=time.time()
 
+            access = sendMeil("eenkhsuren10@gmail.com", mail, "Тавтай морил", sendDatas)
+            print(access)
             return redirect('login')
 
 def loginClick(request):
@@ -163,6 +165,8 @@ def loginClick(request):
                 check_pass = check_password(password, stored_hash)
                 if check_pass:
                     human_row = human_i.objects.get(id=human_id)
+                    print(human_id)
+                    print(check_pass)
                     request.session['login'] = check_pass
                     request.session['user_id'] = human_id
                     request.session['db_key'] = human_row.db_key
@@ -181,7 +185,7 @@ def loginClick(request):
                     # nuuts ug buruu bna
                     # return render(request, "home.html")
                     messages.success(request, 'Таны нууц үг буруу байна!')
-                    return render(request, "login.html")
+                    return redirect(login)
         elif auth_login.count()>1:
             #email davhardaj bna
             messages.success(request, 'Таны имэйл хаяг давхардаж байна!')
@@ -249,6 +253,7 @@ def memberClick(request):
     # return redirect(dashboard)
     print(request.session.get('login'))
     if (request.session.get('login')==True):
+
         return render(request, "pages/member.html")
     else:
         return redirect('login')
@@ -271,7 +276,11 @@ def settingsClick(request):
                 # tree_front.append(f'''{qqqq.getid()},{qqqq.getmid()},{qqqq.getroot_id()},{qqqq.getname()},{qqqq.gettype1()},{qqqq.getmen_cnt()},{qqqq.getdate()}''')
 
             # print(f'''{str(tree_some.id)},{str(tree_some.mid)},{str(tree_some.root_id)},{tree_some.name},{str(tree_some.short_name)},{str(tree_some.type)},{str(tree_some.men_cnt)},{str(tree_some.date)}''')
-            return render(request, "pages/settings.html",{'tree_com': tree_com,'tree_all':tree_front})
+            direct_g = direct_group.objects.filter(com_id__icontains=request.session['com_id'])
+            ip_res = ip_i.objects.filter(date__icontains=request.session['com_id'])
+            # direct = direct_i.objects.filter(com_id__icontains=request.session['com_id']).order_by('create_date', 'id')
+            # time_Data =  {'direct_g': direct_g, 'direct': direct}
+            return render(request, "pages/settings.html",{'tree_com': tree_com,'tree_all':tree_front,'direct_g':direct_g,'ips':ip_res})
     else:
         return redirect('login')
 
