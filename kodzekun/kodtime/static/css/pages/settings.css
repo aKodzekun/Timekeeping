@@ -112,6 +112,7 @@
     background: url(img/com.png) no-repeat;
     transform: scale(0.6);
     margin: -5px 0px 0px -10px;
+    transition: transform 2s ease;
 }
 .settings .left_body .content #structure .tree .list .depfolder{
     width: 32px;
@@ -119,6 +120,7 @@
     background: url(img/dep.png);
     transform: scale(0.6);
     margin: -5px 0px 0px -10px;
+    transition: transform 2s ease;
 }
 .settings .left_body .content #structure .tree .list .appfolder{
     width: 32px;
@@ -126,6 +128,7 @@
     background: url(img/app.png);
     transform: scale(0.6);
     margin: -5px 0px 0px -10px;
+    transition: transform 2s ease;
 }
 .settings .left_body .content #structure .tree .list div:nth-child(3){
     margin: 2px 0px 0px -16px;
@@ -138,7 +141,7 @@
     place-items: center;
     position: sticky;
 }
-.settings .left_body .content #structure .tree_add .popup-btn{
+.settings .left_body .content .popup-btn{
     border: none;
     outline: none;
     height: 50px;
@@ -219,6 +222,24 @@
     font-weight: bold;
     border-radius: 3px;
 }
+.settings .left_body .content #timesettings .list .time_icon {
+    display: flex;
+    place-items: center;
+}
+.settings .left_body .content #timesettings .list .time_icon svg {
+    transition: transform 2s ease;
+}
+.settings .left_body .content #timesettings .list.selcttt .time_icon svg {
+    transform: rotate(360deg);
+}
+.settings .left_body .content #timesettings .list .time_name {
+    font-size: 17px;
+    color: black;
+}
+.settings .left_body .content #timesettings .list .time_desc {
+    font-size: 14px;
+    color: #8b8b8b;
+}
 .settings .left_body .content #timesettings .time_list::-webkit-scrollbar{
     width: 0.5rem;
     height: 0.5rem;
@@ -231,25 +252,50 @@
 .settings .left_body .content #timesettings .time_list:hover::-webkit-scrollbar-thumb{
     visibility: visible;
 }
+.settings .left_body .content #timesettings .time_add .this_more td {
+   padding: 10px;
+}
+.settings .left_body .content #timesettings .time_add .more_item:first-child td {
+    font-size: 22px;
+    padding: 10px 10px 0px 0px;
+    color: #626262;
+    border-bottom: 1px dashed #e1e1e1;
+}
+.settings .left_body .content #timesettings .time_add .more_item:nth-child(2) {
+    background: aliceblue;
+}
+.settings .left_body .content #timesettings .time_add .more_item:nth-child(n+3) div {
+    padding: 7px;
+    background: #58D68D;
+    color: #fff;
+    border-radius: 5px;
+}
+.settings .left_body .content #timesettings .time_add .divbttn {
+    display: flex;
+    margin: 0px 50px;
+    gap: 25px;
+}
 .settings .left_body .content #ipsettings .morecontent {
     height: 100%;
     width: 100%;
     padding: 20px;
-    display: flex;
+    /* display: flex; */
+    display: grid;
+    place-items: center;
 }
 .settings .left_body .content #ipsettings .Ip_view {
     height: 100%;
-    width: 30%;
+    width: 40%;
     padding: 10px;
     box-shadow: 0 0.1rem 0.4rem #0002;
 }
-.settings .left_body .content #ipsettings .Ip_add {
+/* .settings .left_body .content #ipsettings .Ip_add {
     height: 100%;
     width: 70%;
     padding: 20px;
     display: grid;
     place-items: center;
-}
+} */
 .settings .left_body .content #ipsettings .Ip_list {
     height: 93%;
     width: 100%;

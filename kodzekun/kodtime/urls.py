@@ -23,6 +23,11 @@ urlpatterns = [
     path('logintoforget/', logintoforget, name="logintoforget"),
     path('password_recovery/', password_recovery, name="password_recovery"),
     path('getData/', getData, name='getData'),
+    path('getTime/', getTime, name='getTime'),
     path('treepopup/', treepopup, name='treepopup'),
-    path('tree_back/', tree_back, name='tree_back')
+    path('tree_back/', tree_back, name='tree_back'),
+    path('timepopup/', timepopup, name='timepopup'),
+    path('time_back/', time_back, name='time_back'),
+    path('ippopup/', ippopup, name='ippopup'),
+    path('ip_back/', ip_back, name='ip_back')
 ]

@@ -1,0 +1,14 @@
+#popup-container #popup-content .time_pop_lists {
+    display: grid;
+    justify-content: start;
+    padding: 10px;
+}
+#popup-container #popup-content .time_pop_lists .time_pop_list {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5px;
+    gap: 5px;
+}
+#popup-container #popup-content .time_pop_lists .time_pop_list div:nth-child(2) {
+    width: 75px;
+}
