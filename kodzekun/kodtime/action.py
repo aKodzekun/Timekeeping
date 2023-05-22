@@ -50,7 +50,7 @@ def tree_back(request):
                 messages.success(request, 'Уг бүтэц дээр '+is_human+'хүн бүртгэлтэй байна!')
                 return render(request, "pages/settings.html")
             else:
-                tree = tree_i.objects.get(id=id)
+                tree = tree_i.objects.get(id__icontains=id)
                 tree.delete()
                 messages.success(request, 'Ажилттай устлаа!')
                 return render(request, "pages/settings.html")

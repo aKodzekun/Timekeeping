@@ -4,6 +4,7 @@ from .views import *
 from .settings import *
 from .popup import *
 from .action import *
+from .pagas_control import *
 
 urlpatterns = [
     path('', home, name="home"),
@@ -29,5 +30,9 @@ urlpatterns = [
     path('timepopup/', timepopup, name='timepopup'),
     path('time_back/', time_back, name='time_back'),
     path('ippopup/', ippopup, name='ippopup'),
-    path('ip_back/', ip_back, name='ip_back')
+    path('ip_back/', ip_back, name='ip_back'),
+    path('member_show/', member_show, name='member_show'),
+    path('add_member/', add_member, name='add_member'),
+    path('membersave/', membersave, name='membersave'),
+
 ]

@@ -1,7 +1,7 @@
 function treepopup(params) {
     var box=$('#popup-container #popup-content form'),
         datas = $(box).attr('datas'),
-        dataArr= ((datas.replace(/[{}'()!@#[$]/g, "")).replace(/]/g, "")).split(", ");
+        dataArr= ((datas.replace(/{}'()!@#$=/g, "")).replace(/]/g, "")).split(", ");
 
     var csrftoken = getCookie('csrftoken');
     $('#in',box).val(dataArr[3]+" дотор");

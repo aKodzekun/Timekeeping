@@ -1,0 +1,45 @@
+<div id="popup-container">
+    <div id="popup-content">
+        <h1 style=" font-size: 1.9rem; ">Ажилтан нэмэх</h1>
+        <form action="" method="POST" class="input-box ippopup" id="memberpopup" novalidate="" datas="">
+            <div class="input-field">
+                <input type="text" class="input" id="last" name="last" required>
+                <label for="last">Овог</label>
+            </div>
+            <div class="input-field">
+                <input type="text" class="input" id="first" name="first" required>
+                <label for="first">Нэр</label>
+            </div>
+            <div class="input-field">
+                <input type="number" class="input" id="salary" name="salary" required>
+                <label for="salary">Цалин</label>
+            </div>
+            <div class="input-field">
+                <input type="number" class="input" id="age" name="age" required>
+                <label for="age">Нас</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input gender" type="checkbox" id="inlineCheckbox1" value="option1">
+                <label class="form-check-label" for="inlineCheckbox1">Хүйс</label>
+            </div>
+            <div class="input-field">
+                <input type="number" class="input" id="phone" name="phone" required>
+                <label for="phone">Утас</label>
+            </div>
+            <div class="input-field">
+                <input type="text" class="input" id="mail" name="mail" required>
+                <label for="mail">И-мейл</label>
+            </div>
+            <select class="form-select direct" name="type" aria-label="Default select example">
+                  <option value="0">Цаг бүртгэл сонгох...</option>
+                  {% for data in datas %}
+                    <option value="{{data.id}}">{{data.name}}</option>
+                  {% endfor %}
+            </select>
+            <div class="popup-bttn">
+                <div id="save-popup">Хадгалах</div>
+                <div id="close-popup">Гарах</div>
+            </div>
+        </form>
+    </div>
+</div>

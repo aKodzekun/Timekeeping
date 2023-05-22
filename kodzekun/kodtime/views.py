@@ -234,7 +234,6 @@ def dashboardClick(request):
     else:
         return redirect('login')
 
-
 def notificationClick(request):
     # return redirect(dashboard)
     if (request.session.get('login') == True):
@@ -250,11 +249,15 @@ def analystClick(request):
         return redirect('login')
 
 def memberClick(request):
-    # return redirect(dashboard)
-    print(request.session.get('login'))
     if (request.session.get('login')==True):
+        tree_com = tree_i.objects.filter(id__icontains=request.session['com_id'])
+        for tree in tree_com:
+            tree_all = tree_i.objects.filter(root_id__icontains=tree.root_id)
+            tree_front = []
+            for tree_some in tree_all:
+                tree_front.append(f'''{str(tree_some.id)},{str(tree_some.mid)},{str(tree_some.root_id)},{tree_some.name},{str(tree_some.short_name)},{str(tree_some.type)},{str(tree_some.men_cnt)},{str(tree_some.date)}''')
 
-        return render(request, "pages/member.html")
+            return render(request, "pages/member.html",{'tree_com': tree_com,'tree_all':tree_front})
     else:
         return redirect('login')
 
@@ -268,18 +271,10 @@ def settingsClick(request):
             # tree_array=[]
             tree_front=[]
             for tree_some in tree_all:
-                # tree_res = Tree(str(tree_some.id),str(tree_some.mid),str(tree_some.root_id),tree_some.name,str(tree_some.short_name),str(tree_some.type),str(tree_some.men_cnt),str(tree_some.date))
-                # tree_array.append(tree_res)
                 tree_front.append(f'''{str(tree_some.id)},{str(tree_some.mid)},{str(tree_some.root_id)},{tree_some.name},{str(tree_some.short_name)},{str(tree_some.type)},{str(tree_some.men_cnt)},{str(tree_some.date)}''')
-            # for qqqq in tree_array:
-            #     print(qqqq.getid(),qqqq.getname())
-                # tree_front.append(f'''{qqqq.getid()},{qqqq.getmid()},{qqqq.getroot_id()},{qqqq.getname()},{qqqq.gettype1()},{qqqq.getmen_cnt()},{qqqq.getdate()}''')
-
-            # print(f'''{str(tree_some.id)},{str(tree_some.mid)},{str(tree_some.root_id)},{tree_some.name},{str(tree_some.short_name)},{str(tree_some.type)},{str(tree_some.men_cnt)},{str(tree_some.date)}''')
             direct_g = direct_group.objects.filter(com_id__icontains=request.session['com_id'])
             ip_res = ip_i.objects.filter(date__icontains=request.session['com_id'])
-            # direct = direct_i.objects.filter(com_id__icontains=request.session['com_id']).order_by('create_date', 'id')
-            # time_Data =  {'direct_g': direct_g, 'direct': direct}
+
             return render(request, "pages/settings.html",{'tree_com': tree_com,'tree_all':tree_front,'direct_g':direct_g,'ips':ip_res})
     else:
         return redirect('login')
