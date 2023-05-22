@@ -71,20 +71,20 @@ def sendMeil(sender_email_,recipient_email_,Subject,sendDatas):
     # https://mailtrap.io/email-sandbox/
     # https://mailtrap.io/home
     #(235, b'2.0.0 OK')
-    # smtp_server = 'sandbox.smtp.mailtrap.io'
-    # smtp_port = 2525  # Имэйл сервертээ тохируулан портын дугаараа шинэчил
-    # smtp_username = '02d51efd0a3318'
-    # smtp_password = 'a980c004eae155'
-    # smtp_tls = True  # Хэрэв таны имэйл сервер TLS шаардлагатай бол Үнэн, үгүй бол Худал гэж тохируулна уу
+    smtp_server = 'sandbox.smtp.mailtrap.io'
+    smtp_port = 2525  # Имэйл сервертээ тохируулан портын дугаараа шинэчил
+    smtp_username = '02d51efd0a3318'
+    smtp_password = 'a980c004eae155'
+    smtp_tls = True  # Хэрэв таны имэйл сервер TLS шаардлагатай бол Үнэн, үгүй бол Худал гэж тохируулна уу
 
     # https://app-smtp.sendinblue.com/real-time
     # https://app.sendinblue.com/marketing-dashboard
     # (235, b'Authentication successful')
-    smtp_server = 'smtp-relay.sendinblue.com'
-    smtp_port = 587  # Имэйл сервертээ тохируулан портын дугаараа шинэчил
-    smtp_username = 'akodzekun@gmail.com'
-    smtp_password = 'KsIrEjOq0c76xYQP'
-    smtp_tls = True  # Хэрэв таны имэйл сервер TLS шаардлагатай бол Үнэн, үгүй бол Худал гэж тохируулна уу
+    # smtp_server = 'smtp-relay.sendinblue.com'
+    # smtp_port = 587  # Имэйл сервертээ тохируулан портын дугаараа шинэчил
+    # smtp_username = 'akodzekun@gmail.com'
+    # smtp_password = 'KsIrEjOq0c76xYQP'
+    # smtp_tls = True  # Хэрэв таны имэйл сервер TLS шаардлагатай бол Үнэн, үгүй бол Худал гэж тохируулна уу
     #
 
 

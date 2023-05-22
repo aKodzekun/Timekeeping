@@ -509,7 +509,7 @@ function days_color(day) {
 }
 function epoch_to_human(epoch) {
     if(epoch=="0"){
-        return '<font color="gray">[Тодорхойгүй]</font>'
+        return '<font color="gray">[Тодорхойгүй]</font>';
     } else {
         hours=0,min=0;
         hours=parseInt(epoch)/3600;
