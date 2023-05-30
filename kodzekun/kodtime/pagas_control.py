@@ -4,7 +4,7 @@ from .models import *
 from .fuction import *
 from django.db.models import *
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 
 def member_show(request):
@@ -16,6 +16,7 @@ def member_show(request):
             res_human = human_i.objects.filter(Q(com_id__icontains=id) | Q(dep_id__icontains=id) | Q(app_id__icontains=id))
             if res_human.count()>0:
                 for row in res_human:
+
                     members.append(f'''{str(row.id)}#{str(row.last_name)}#{str(row.first_name)}#{str(row.gender)}#{str(row.phone)}#{str(row.email)}#{str(row.work_type_id)}#{str(row.is_attendace)}#{str(row.salary_id)}''')
             else:
                 members.append(f'''none''')
@@ -24,27 +25,46 @@ def member_show(request):
             members = []
             id = request.POST.get('tree_id')
             search = request.POST.get('search')
-            print(search)
-            name = models.Q(first_name__contains=str(search))
-            # dep = models.Q(dep_id__icontains=id)
-            # app = models.Q(app_id__icontains=id)
-            # & (com | dep | app)
+            if search != '':
+                # print("search tree: ",type(id))
+                if id=="0":
+                    id=request.session['com_id']
 
-            combined_filter = name
+                name = models.Q(first_name__contains=str(search))
+                com = models.Q(com_id__icontains=id)
+                dep = models.Q(dep_id__icontains=id)
+                app = models.Q(app_id__icontains=id)
 
-            filtered_objects = human_i.objects.filter(combined_filter)
+                # print("search tree: ",id)
+                # & (com | dep | app)
 
-            if filtered_objects.count()>0:
-                for row in filtered_objects:
-                    members.append(f'''{str(row.id)}#{str(row.last_name)}#{str(row.first_name)}#{str(row.gender)}#{str(row.phone)}#{str(row.email)}#{str(row.work_type_id)}#{str(row.is_attendace)}#{str(row.salary_id)}''')
+                # combined_filter = name | dep | app
+
+                filtered_objects = human_i.objects.filter(name & (com | dep | app))
+
+                if filtered_objects.count()>0:
+                    for row in filtered_objects:
+                        members.append(f'''{str(row.id)}#{str(row.last_name)}#{str(row.first_name)}#{str(row.gender)}#{str(row.phone)}#{str(row.email)}#{str(row.work_type_id)}#{str(row.is_attendace)}#{str(row.salary_id)}''')
+                else:
+                    members.append(f'''none''')
+                return JsonResponse({'datas':members})
             else:
-                members.append(f'''none''')
-            return JsonResponse({'datas':members})
+                members = []
+                id = request.session['com_id']
+                res_human = human_i.objects.filter(
+                    Q(com_id__icontains=id) | Q(dep_id__icontains=id) | Q(app_id__icontains=id))
+                if res_human.count() > 0:
+                    for row in res_human:
+                        members.append(
+                            f'''{str(row.id)}#{str(row.last_name)}#{str(row.first_name)}#{str(row.gender)}#{str(row.phone)}#{str(row.email)}#{str(row.work_type_id)}#{str(row.is_attendace)}#{str(row.salary_id)}''')
+                else:
+                    members.append(f'''none''')
+                return JsonResponse({'datas': members})
 
 def add_member(request):
     com_id = request.session['com_id']
     datas = direct_group.objects.filter(com_id__icontains=com_id)
-    print(com_id)
+    # print(com_id)
     return render(request, "popup/memberpopup.html", {'datas': datas})
 
 def membersave(request):
@@ -59,7 +79,7 @@ def membersave(request):
         gender = request.POST.get('gender')
         app_id = request.POST.get('app_id')
 
-        print(app_id)
+        # print(app_id)
         adminpass = make_password("12001200", salt=None)
 
         tree_res = tree_i.objects.filter(id__icontains=app_id)
@@ -112,5 +132,15 @@ def membersave(request):
         }
 
         aaa = sendMeil("eenkhsuren10@gmail.com", mail, "sain bna u", sendDatas)
-        print("eeeeeeeeeeeeeeeeeeeeeeeee"+aaa)
-        return render(request, "pages/member.html")
+
+def memberdel(request):
+    user_id = request.POST.get('user_id')
+    human_del = human_i.objects.get(id__icontains=user_id)
+    human_del.delete()
+    return render(request, "pages/member.html")
+
+def memberedit(request):
+    com_id = request.session['com_id']
+    datas = direct_group.objects.filter(com_id__icontains=com_id)
+    # print(com_id)
+    return render(request, "popup/memberpopup.html", {'datas': datas})

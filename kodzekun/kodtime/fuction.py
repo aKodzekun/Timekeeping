@@ -1,4 +1,6 @@
 import time
+from datetime import date
+
 import bcrypt
 import smtplib
 import random, string
@@ -127,3 +129,25 @@ def htmlDraw(sendDatas):
 
     return template.render(sendDatas)
 
+def gettoday():
+    today = date.today()
+
+    if today.weekday() == 0:  # 1
+        return 1
+    elif today.weekday() == 1:  # 2
+        return 2
+    elif today.weekday() == 2:  # 3
+        return 3
+    elif today.weekday() == 3:  # 4
+        return 4
+    elif today.weekday() == 4:  # 5
+        return 5
+    elif today.weekday() == 5:  # 6
+        return 6
+    elif today.weekday() == 6:  # 7
+        return 7
+    else:
+        return 8
+
+def dateHun(data):
+    return time.strftime("%H:%M", time.localtime(data))

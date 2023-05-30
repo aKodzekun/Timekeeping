@@ -43,6 +43,7 @@ def tree_about(id):
             send_data.append(f'''{str(tree_row.name)},{str(tree_row.men_cnt)},{str(tree_row.date)},{str(tree_row.type)},{str(human_all)},{str(human_active)}''')
             # print(send_data)
             return send_data
+
 def getTime(request):
     if request.method == 'POST':
         direct_id = request.POST.get('direct_id')

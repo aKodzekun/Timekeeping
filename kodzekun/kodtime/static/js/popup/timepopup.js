@@ -13,6 +13,7 @@ function timepopup(params) {
             $('.time_pop_list.1d .is_flixible',box).prop("checked", false);
         }
     });
+
     $('.time_pop_list.1d .is_flixible',box).change(function()  {
         if ($(this).is(":checked")) {
             // Checkbox is checked
@@ -346,7 +347,7 @@ function timepopup(params) {
                 'penalty':penalty,
                 'days[]':arr
             }
-            console.log(datas);
+            // console.log(datas);
             tree_back.send(datas)
         }
     });

@@ -18,7 +18,7 @@ function ip_popup(params) {
                 'ip':ip,
                 'desc':desc
             };
-            console.log("request ip");
+            // console.log("request ip");
             ip_back.send(datas)
         }
     });

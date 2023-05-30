@@ -18,13 +18,12 @@ $(function() {
     $('.topbar .cmd_print',box_l).append(print);
     $('.topbar .input-group div:last-child',box_l).html(search);
 
-    $('.member_content').on('click', '#close-popup',function(){
+    $('body').on('click', '#close-popup',function(){
         $('#popup-container').remove();
     });
 
     var ajax ={
         send: function(url,datas,tsk,app_id)  {
-            console.log(datas);
             $.ajax({
                 url: url,
                 type: "POST",
@@ -35,9 +34,13 @@ $(function() {
                 success: function(msg) {
                     if (tsk=='add_member') {
                         $(box_l).after(msg);
-                        console.log(app_id);
                         new memberpopup(app_id);
-                    }else{
+                    } else if (tsk=='memberedit'){
+                        $(box_l).after(msg);
+                        console.log('====================================');
+                        console.log("hi");
+                        console.log('====================================');
+                    } else {
                         var datas =JSON.stringify(msg);
                         ajax.success(datas,tsk);
                     }
@@ -50,8 +53,11 @@ $(function() {
         success: function(datas,tsk)  {
             if(tsk=='member_show'){
                 clear_data = (datas.slice(0, -2).slice(9)).replace(/[[\"']/g, "").split(",");
-                console.log(clear_data);
+                // console.log(clear_data);
                 draw_member(clear_data,tsk);
+            } 
+            if(tsk=='memberdel'){
+                location.reload();
             }
         }
     };
@@ -90,6 +96,7 @@ $(function() {
         }
     });
 
+    // Search
     $('.topbar .input-group input').on('input', function() {
         var inputText = $(this).val(),
             caretIndex = $(this).prop('selectionStart'),
@@ -104,18 +111,51 @@ $(function() {
             }
             caretIndex -= words[i].length + 1;
         }
-        ajax.send("/member_show/",{'tsk':'member_search','tree_id':tree_id,'search':currentWord},'member_show');
+        ajax.send("/member_show/",{'tsk':'member_search','tree_id':(tree_id==undefined?0:tree_id),'search':currentWord},'member_show');
     });
 
+    // User add
     $('.topbar',box_l).on('click', '.cmd_member',function() {
         appcheck=$('.tree .list.choosed div:nth-child(2)',box_r).hasClass("appfolder");
         if(appcheck){
             app_id=$('.tree .list.choosed').attr('id');
-            console.log(app_id);
+            // console.log(app_id);
             ajax.send("/add_member/",{'tsk':'add_member','tree_id':app_id},'add_member',app_id);
         }else{
             alert('Албан тушаал сонгоно уу!#');
         }
+    });
+
+    // User del pop
+    $('.content .content_body',box_l).on('click', '.memberpop',function() {
+        var user_id=$(this).attr('item'),
+            user=$(this).attr('user');
+        $(box_l).after('<div id="popup-container">'+
+                            '<div id="popup-content" style=" width: 480px; ">'+
+                                '<h1 style=" font-size: 1.9rem; ">Хэрэглэгч устгах</h1>'+
+                                '<form action="" method="POST" class="input-box userdelpopup" novalidate="" datas="" style=" width: 100%; ">'+
+                                    '<div class="">'+
+                                        '<b>'+user+'</b> хэрэглэгчийг устгах гэж байна. </br>Үнэхээр устгах уу?'+
+                                    '</div>'+
+                                    '<div class="popup-bttn">'+
+                                        '<div id="save-popup" item="'+user_id+'">Тийм</div>'+
+                                        '<div id="close-popup">Үгүй</div>'+
+                                    '</div>'+
+                                '</form>'+
+                            '</div>'+
+                        '</div>');
+    });
+
+    // User del bttn
+    $('.member_content').on('click', '#save-popup',function() {
+        var user_id=$(this).attr('item');
+        ajax.send("/memberdel/",{'tsk':'memberdel','user_id':user_id},'memberdel',user_id);
+    });
+
+    // User edit pop
+    $('.content .content_body',box_l).on('click', '.memberedit',function() {
+        var user_id=$(this).attr('item');
+        ajax.send("/memberedit/",{'tsk':'memberedit','user_id':user_id},'memberedit',user_id);
     });
 
     function tree(mid) {
@@ -173,7 +213,7 @@ $(function() {
             if (datas[0]!='none'){
                 datas.forEach(elements => {
                 var item = elements.split("#");
-                console.log(item);
+                // console.log(item);
                 tr_r +='<tr item="'+item[0]+'">'+
                             '<td>'+(++cnt)+'</td>'+
                             '<td>'+item[1]+'</td>'+
@@ -184,8 +224,8 @@ $(function() {
                             '<td><div>'+(item[6]=='0'?nulll:item[6])+'</div></td>'+
                             '<td><div>'+(item[7]=='1'?'Бүртгүүлнэ':'Бүртгүүлэхгүй')+'</div></td>'+
                             '<td><div>'+(item[8]=='0'?nulll:item[8]+'Төг')+'</div></td>'+
-                            '<td>'+useredit+'</td>'+
-                            '<td>'+useredel+'</td>'+
+                            '<td class="memberedit" item="'+item[0]+'">'+useredit+'</td>'+
+                            '<td class="memberdel" user="'+item[1]+' '+item[2].toUpperCase()+'" item="'+item[0]+'">'+useredel+'</td>'+
                         '</tr>';
                 });
             } else {

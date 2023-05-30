@@ -1,5 +1,73 @@
 {% extends 'home.html' %}
 
 {% block content %}
-<h1>Dashboard</h1>
+<div class="table dashboard-content">
+    <div class="right_body">
+        <div class="boxes">
+            <div class="box box1">
+                <i class="uil uil-thumbs-up"></i>
+                <span class="text">Нийт ирэх</span>
+                <span class="number">{{count}}</span>
+            </div>
+            <div class="box box2">
+                <i class="uil uil-comments"></i>
+                <span class="text">Ирсэн</span>
+                <span class="number">{{scount}}</span>
+            </div>
+            <div class="box box3">
+                <i class="uil uil-share"></i>
+                <span class="text">Ирэх боломжгүй</span>
+                <span class="number">{{ncount}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="left_body">
+        <div class="content">
+            <div style="height: 50%;">  
+                <table style=" margin-left: 60px; ">
+                    <tr class="more_item">
+                        <td colspan="8"><div>Ирсэн ажилтны жагсаалт</div></td>
+                    </tr>
+                    <tr class="more_item">
+                        <td>Нэр</td>
+                        <td>имейл</td>
+                        <td>Эхлэх&nbsp;цаг</td>
+                        <td>Тарах&nbsp;цаг</td>
+                        <td>Төлөв</td>
+                        <td>Торгууль</td>
+                    </tr>
+                    {% for ir in iresen %}
+                        <tr class="more_item">
+                            <td>{{ir.last_name}}.{{ir.first_name}}</td>
+                            <td>{{ir.email}}</td>
+                            <td>{{ir.time_1}}</td>
+                            <td>{{ir.time_2}}</td>
+                            <td>{{ir.work_type_id}}</td>
+                            <td>0</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div>  
+                <table style=" margin-left: 60px; ">
+                    <tr class="more_item">
+                        <td colspan="8"><div>Ирээгүй ажилтны жагсаалт</div></td>
+                    </tr>
+                    <tr class="more_item">
+                        <td>Нэр</td>
+                        <td>имейл</td>
+                        <td>Төлөв</td>
+                    </tr>
+                    {% for ir in ireegvi %}
+                        <tr class="more_item">
+                            <td>{{ir.last_name}}.{{ir.first_name}}</td>
+                            <td>{{ir.email}}</td>
+                            <td>{{ir.work_type_id}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

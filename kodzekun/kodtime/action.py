@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 
 def tree_back(request):
     if request.method == 'POST':
+        print("Enkhee tree back")
         name = request.POST.get('name')
         short_name = request.POST.get('short_name')
         type = request.POST.get('type')
@@ -17,7 +18,9 @@ def tree_back(request):
         mid_id = request.POST.get('mid')
         tsk = request.POST.get('tsk')
 
+        print("tree tsk : "+tsk)
         if tsk=='save':
+            print("tree save")
             myTree = tree_i()
             myTree.mid = mid_id
             myTree.root_id = root
@@ -34,14 +37,13 @@ def tree_back(request):
 
         if tsk=='edit':
             id = request.POST.get('id')
-            tree = tree_i.objects.get(id=id)
+            tree = tree_i.objects.get(id__icontains=id)
             tree.name = name
             tree.short_name = short_name
             tree.men_cnt = men_cnt
             tree.save()
             messages.success(request, 'Ажилттай засагдлаа!')
             return render(request, "pages/settings.html")
-
 
         if tsk=='del':
             id = request.POST.get('id')
