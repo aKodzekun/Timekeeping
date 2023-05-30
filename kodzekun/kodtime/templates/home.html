@@ -16,9 +16,11 @@
     <script src="{% static 'js/popup/timepopup.js' %}"></script>
     <script src="{% static 'js/popup/ip_popup.js' %}"></script>
     <script src="{% static 'js/popup/memberpopup.js' %}"></script>
+    <script src="{% static 'js/popup/time_pop.js' %}"></script>
 
     <script src="{% static 'js/pages/settings.js' %}"></script>
     <script src="{% static 'js/pages/member.js' %}"></script>
+    <script src="{% static 'js/home.js' %}"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/global_css/sidebar.css' %}">
     <link rel="stylesheet" href="{% static 'css/global_css/loading.css' %}">
@@ -27,9 +29,11 @@
 
     <link rel="stylesheet" href="{% static 'css/pages/member.css' %}">
     <link rel="stylesheet" href="{% static 'css/pages/settings.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pages/dashboard.css' %}">
     <link rel="stylesheet" href="{% static 'css/popup/treepopup.css' %}">
     <link rel="stylesheet" href="{% static 'css/popup/timepopup.css' %}">
     <link rel="stylesheet" href="{% static 'css/popup/ippopup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/popup/timeclick.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 
@@ -37,10 +41,14 @@
     <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
   </head>
   <body>
-    <nav>
+    <nav style=" justify-content: space-between;">
       <div class="logo">
         <i class="bx bx-menu menu-icon topbar"></i>
-        <span class="logo-name">Цаг бүртгэл</span>
+        <span class="logo-name">Цагаа бүртгэл</span>
+      </div>
+      <div class="nav-r">
+        <div class="time-click">Цаг бүртгүүлэх</div>
+        <div class="user-r"><div class="user-icon nav-{{gender}}"></div><div>{{last_name}}.{{first_name}}</div></div>
       </div>
       <div class="sidebar">
         <div class="logo">
@@ -56,7 +64,7 @@
                 <span class="link">Хяналтын самбар</span>
               </a>
             </li>
-            <li class="list">
+            <!-- <li class="list">
                 <a href="{% url 'notificationClick' %}" class="nav-link">
                 <i class="bx bx-bell icon"></i>
                 <span class="link">Мэдэгдэл</span>
@@ -67,7 +75,7 @@
                 <i class="bx bx-pie-chart-alt-2 icon"></i>
                 <span class="link">Аналитик</span>
               </a>
-            </li>
+            </li> -->
             <li class="list">
                 <a href="{% url 'memberClick' %}" class="nav-link">
                 <i class="bx bx-user icon"></i>

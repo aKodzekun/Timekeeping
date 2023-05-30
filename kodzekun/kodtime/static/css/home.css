@@ -5,3 +5,37 @@ div.table{
     justify-content: center;
     align-items: center;
 }
+nav .nav-r {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 24px;
+    width: 30%;
+    gap: 70px;
+}
+nav .time-click {
+    padding: 10px;
+    background: darkorange;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+nav .user-r {
+    place-items: center;
+    display: flex;
+    gap: 20px;  
+}
+nav .user-icon {
+    height: 35px;
+    width: 35px;
+}
+nav .nav-man {
+    background: url(img/man.png) no-repeat #6495ed;
+    background-position-x: -2px;
+    border-radius: 50%;
+}
+nav .nav-woman {
+    background: url(img/female.png) no-repeat #ed64d8;
+    background-position-x: -2px;
+    border-radius: 50%;
+}

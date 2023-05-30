@@ -1,6 +1,8 @@
 from .models import *
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.shortcuts import render, redirect
+
+from .fuction import *
 
 def treepopup(request):
     if request.method == 'POST':
@@ -71,3 +73,22 @@ def ippopup(request):
     else:
         return redirect('dashboardClick')
 
+def timeclick(request):
+    if request.method == 'POST':
+        today = gettoday()
+        human_row = human_i.objects.get(id=int(request.session['user_id']))
+        print(human_row.time_access_id)
+        print(today)
+        if human_row.time_access_id==0:
+            datas={'istime':0}
+        else:
+            # direct_g_row = direct_group.objects.get(id=int(human_row.time_access_id))
+            direct_row = direct_i.objects.get(Q(direct_group_id=human_row.time_access_id) & Q(days=today))
+            print(direct_row.between_end_date)
+            sbdate = '[тодорхойгүй]' if direct_row.between_start_date == 0 else dateHun(direct_row.between_start_date)
+            ebdate = '[тодорхойгүй]' if direct_row.between_end_date == 0 else dateHun(direct_row.between_end_date)
+            datas={'istime':1,'clockab':direct_row,'sdate':dateHun(direct_row.start_date),'sbdate':sbdate,'edate':dateHun(direct_row.end_date),'ebdate':ebdate}
+        print(datas)
+        return render(request, "popup/timeclickpop.html",datas)
+    else:
+        return redirect('dashboardClick')

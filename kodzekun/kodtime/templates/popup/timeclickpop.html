@@ -1,0 +1,23 @@
+<div id="popup-container">
+    <div id="popup-content">
+        <h1 style=" font-size: 1.9rem; ">Цагаа бүртгүүлэх</h1>
+        <!-- <p>Стандартын дагуу IP-гаа бүртгүүлнэ үү.</p> -->
+        <form action="" method="POST" class="input-box time-pop" novalidate="" datas="{{clockab.direct_group_id}}">
+            Эхлэх цаг: <span class="ssss">{{sdate}}-{{sbdate}}</span></br>
+            Тарах цаг: <span class="eeee">{{edate}}-{{ebdate}}</span>
+            <div class="display">
+                <div id="time"></div>
+            </div>
+            <div class="time_type">
+            <select class="form-select" name="time_type" id="time_type" aria-label="Default select example">
+                    <option value="1">Эхлэх цаг</option>
+                    <option value="2">Тарах цаг</option>
+            </select>
+            </div>
+            <div class="popup-bttn">
+                <div id="save-popup">Бүртгүүлэх</div>
+                <div id="close-popup">Гарах</div>
+            </div>
+        </form>
+    </div>
+</div>

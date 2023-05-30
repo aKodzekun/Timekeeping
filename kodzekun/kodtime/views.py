@@ -1,3 +1,10 @@
+from datetime import datetime
+
+# from django.db.models import Q
+from django.db.models import Sum, Q
+from django.db import connection
+from django.http import JsonResponse
+
 from .models import *
 from smtplib import *
 from .fuction import *
@@ -230,21 +237,50 @@ def password_recovery(request):
 def dashboardClick(request):
     # return redirect(dashboard)
     if (request.session.get('login') == True):
-        return render(request, "pages/dashboard.html")
+        count = human_i.objects.filter(com_id__icontains=int(request.session['com_id'])).count()
+        s_count = direct_schedule_i.objects.filter(Q(description__icontains=request.session['com_id']) & Q(time_1__icontains=1)).count()
+        n_count = human_i.objects.filter(Q(com_id__icontains=int(request.session['com_id']))).exclude(Q(work_type_id=1)).count()
+
+        iresen_ids = direct_schedule_i.objects.filter(Q(description__icontains=request.session['com_id']) & Q(time_1__icontains=1)).values_list('human_id', flat=True)
+        # iresen = human_i.objects.filter(Q(com_id__icontains=request.session['com_id']) & Q(id__in=iresen_ids))
+        # ireegvi = human_i.objects.filter(com_id__icontains=request.session['com_id']).exclude(id__in=iresen_ids)
+
+        # for ds in ireegvi:
+        #     print("ds",ds.last_name)
+        # for aaa in iresen:
+        #     print("aaa",aaa.last_name)
+        # query = "SELECT * FROM your_table WHERE your_condition;"
+        # results = YourModel.objects.raw(query)
+
+        iresen = human_i.objects.raw('SELECT * FROM kodtime_human_i INNER JOIN kodtime_direct_schedule_i ON kodtime_human_i.id = kodtime_direct_schedule_i.human_id WHERE kodtime_human_i.com_id=' + str(request.session['com_id']) + ' AND kodtime_human_i.id IN (' + ', '.join(map(str, iresen_ids)) + ');')
+        ireegvi = human_i.objects.raw('SELECT * FROM kodtime_human_i  WHERE com_id=' + str(request.session['com_id']) + ' AND id NOT IN (' + ', '.join(map(str, iresen_ids)) + ');')
+        # for dfds in joined_results:
+        #     print(dfds.human_id,dfds.last_name)
+
+        return render(request, "pages/dashboard.html",{
+            'first_name':request.session['first_name'],
+            'last_name':request.session['last_name'][:1],
+            'gender':('man' if request.session['gender'] == 1 else 'woman'),
+            'count':count,
+            'scount':s_count,
+            'ncount':n_count,
+            'iresen':iresen,
+            'ireegvi':ireegvi
+        })
     else:
         return redirect('login')
 
 def notificationClick(request):
     # return redirect(dashboard)
     if (request.session.get('login') == True):
-        return render(request, "pages/notification.html")
+        return render(request, "pages/notification.html",{'first_name':request.session['first_name'],'last_name':request.session['last_name'][:1],'gender':('man' if request.session['gender'] == 1 else 'woman')})
     else:
         return redirect('login')
 
 def analystClick(request):
     # return redirect(dashboard)
     if (request.session.get('login') == True):
-        return render(request, "pages/analyst.html")
+        return render(request, "pages/analyst.html",{'first_name':request.session['first_name'],'last_name':request.session['last_name'][:1],'gender':('man' if request.session['gender'] == 1 else 'woman')})
     else:
         return redirect('login')
 
@@ -257,7 +293,7 @@ def memberClick(request):
             for tree_some in tree_all:
                 tree_front.append(f'''{str(tree_some.id)},{str(tree_some.mid)},{str(tree_some.root_id)},{tree_some.name},{str(tree_some.short_name)},{str(tree_some.type)},{str(tree_some.men_cnt)},{str(tree_some.date)}''')
 
-            return render(request, "pages/member.html",{'tree_com': tree_com,'tree_all':tree_front})
+            return render(request, "pages/member.html",{'tree_com': tree_com,'tree_all':tree_front,'first_name':request.session['first_name'],'last_name':request.session['last_name'][:1],'gender':('man' if request.session['gender'] == 1 else 'woman')})
     else:
         return redirect('login')
 
@@ -275,7 +311,7 @@ def settingsClick(request):
             direct_g = direct_group.objects.filter(com_id__icontains=request.session['com_id'])
             ip_res = ip_i.objects.filter(date__icontains=request.session['com_id'])
 
-            return render(request, "pages/settings.html",{'tree_com': tree_com,'tree_all':tree_front,'direct_g':direct_g,'ips':ip_res})
+            return render(request, "pages/settings.html",{'tree_com': tree_com,'tree_all':tree_front,'direct_g':direct_g,'ips':ip_res,'first_name':request.session['first_name'],'last_name':request.session['last_name'][:1],'gender':('man' if request.session['gender'] == 1 else 'woman')})
     else:
         return redirect('login')
 
@@ -296,3 +332,43 @@ def exitClick(request):
 
     return redirect(login)
 
+def time_req(request):
+    if request.method == 'POST':
+        now = request.POST.get('now')
+        epoch = request.POST.get('epoch')
+        id = request.POST.get('id')
+        time_type = request.POST.get('time_type')
+
+        print((datetime.strptime(str(date.today()), '%Y-%m-%d')).timestamp())
+        today=(datetime.strptime(str(date.today()), '%Y-%m-%d')).timestamp()
+        count = direct_schedule_i.objects.filter(Q(human_id=int(request.session['user_id'])) & Q(create_date=int(today))).count()
+        if count > 0:
+            if int(time_type) == 1:
+                direct_schedule_i.objects.filter(Q(human_id=int(request.session['user_id'])) & Q(create_date=int(today))).update(time_1=epoch)
+            else:
+                direct_schedule_i.objects.filter(Q(human_id=int(request.session['user_id'])) & Q(create_date=int(today))).update(time_3=epoch)
+
+            messages.success(request, 'Ажилттай бүртгүүллээ!')
+        else:
+            print(request.session['user_id'])
+            print(id)
+            print(epoch if time_type == 1 else 0)
+            print(time_type)
+            direct = direct_schedule_i()
+            direct.human_id = request.session['user_id']
+            direct.direct_group_id=id
+            direct.is_type=time_type
+            direct.is_lunch=0
+            direct.time_2=0
+            if int(time_type) == 1:
+                direct.time_1=epoch
+                direct.time_3=0
+            else:
+                direct.time_1=0
+                direct.time_3=epoch
+            direct.time_4=0
+            direct.description=request.session['com_id']
+            direct.create_date=today
+            direct.save()
+            messages.success(request, 'Ажилттай бүртгүүллээ!')
+    return JsonResponse({'data':"successful"}, status=200)

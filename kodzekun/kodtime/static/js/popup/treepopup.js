@@ -1,8 +1,12 @@
 function treepopup(params) {
     var box=$('#popup-container #popup-content form'),
         datas = $(box).attr('datas'),
-        dataArr= ((datas.replace(/{}'()!@#$=/g, "")).replace(/]/g, "")).split(", ");
-
+        dataArr= (datas.slice(0, -2).slice(2).replace(/'/g,"")).split(", ");
+        console.log('====================================');
+        console.log(datas.slice(0, -2).slice(2).replace(/'/g,""));
+        console.log(dataArr[8]);
+        console.log(dataArr);
+        console.log('====================================');
     var csrftoken = getCookie('csrftoken');
     $('#in',box).val(dataArr[3]+" дотор");
     $('#cnt',box).val(dataArr[7]);
@@ -38,7 +42,10 @@ function treepopup(params) {
                     'tsk':dataArr[8],
                     'id':dataArr[13]
                 };
-                tree_back.send(datas)
+                console.log('====================================');
+                console.log(datas);
+                console.log('====================================');
+                tree_back.send(datas);
             }
         } else {
             alert('Орон тоо хэтэрсэн байна !#');

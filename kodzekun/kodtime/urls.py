@@ -34,5 +34,8 @@ urlpatterns = [
     path('member_show/', member_show, name='member_show'),
     path('add_member/', add_member, name='add_member'),
     path('membersave/', membersave, name='membersave'),
-
+    path('memberdel/', memberdel, name='memberdel'),
+    path('memberedit/', memberedit, name='memberedit'),
+    path('timeclick/', timeclick, name='timeclick'),
+    path('time_req/', time_req, name='time_req'),
 ]
